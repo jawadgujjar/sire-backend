@@ -8,8 +8,8 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(auth('managePerks'), validate(perkValidation.createPerk), perkController.createPerk)
-  .get(auth('getPerks'), validate(perkValidation.getAllPerks), perkController.getAllPerks);
+  .post(validate(perkValidation.createPerk), perkController.createPerk)
+  .get(validate(perkValidation.getAllPerks), perkController.getAllPerks);
 
 router
   .route('/:perkId')
