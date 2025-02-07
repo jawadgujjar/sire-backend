@@ -8,5 +8,5 @@ yarn.lock
 .env*
 !.env*.example
 
-# Code coverage
+# Code coverage 
 coverage
