@@ -19,4 +19,9 @@ router
   .patch(validate(productValidation.updateProduct), productController.updateProductHandler)
   .delete(validate(productValidation.deleteProduct), productController.deleteProductHandler);
 
+// GET - Get products by category (NEW route)
+router
+  .route('/category/:category')
+  .get(validate(productValidation.getProductByCategory), productController.getProductByCategoryHandler);
+
 module.exports = router;

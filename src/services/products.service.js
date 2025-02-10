@@ -16,6 +16,11 @@ const getProductById = async (id) => {
   return await Product.findById(id);
 };
 
+// Get products by category
+const getProductByCategory = async (category) => {
+  return await Product.find({ category: category });
+};
+
 // Update a product by ID
 const updateProduct = async (id, updatedData) => {
   return await Product.findByIdAndUpdate(id, updatedData, { new: true });
@@ -30,6 +35,7 @@ module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
+  getProductByCategory,
   updateProduct,
   deleteProduct,
 };

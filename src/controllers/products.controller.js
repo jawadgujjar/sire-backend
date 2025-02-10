@@ -1,6 +1,8 @@
 const productService = require('../services/products.service');
 const { createProduct, updateProduct, getProductById } = require('../validations/products.validation');
+const Joi = require('joi'); // if you need Joi validation for category
 
+// Create a new product
 const createProductHandler = async (req, res) => {
   try {
     const { error } = createProduct.validate(req.body);
@@ -15,6 +17,7 @@ const createProductHandler = async (req, res) => {
   }
 };
 
+// Get all products
 const getAllProductsHandler = async (req, res) => {
   try {
     const products = await productService.getAllProducts();
@@ -24,6 +27,7 @@ const getAllProductsHandler = async (req, res) => {
   }
 };
 
+// Get product by ID
 const getProductByIdHandler = async (req, res) => {
   try {
     const { id } = req.params;
@@ -43,6 +47,30 @@ const getProductByIdHandler = async (req, res) => {
   }
 };
 
+// Get products by category
+const getProductByCategoryHandler = async (req, res) => {
+  try {
+    const { category } = req.params;
+    
+    // Optionally, validate the category
+    const categorySchema = Joi.string().required();  // Example validation for category
+    const { error } = categorySchema.validate(category);
+    if (error) {
+      return res.status(400).json({ message: 'Invalid category' });
+    }
+
+    const products = await productService.getProductByCategory(category);
+    if (!products || products.length === 0) {
+      return res.status(404).json({ message: 'No products found for this category' });
+    }
+
+    return res.status(200).json(products);
+  } catch (err) {
+    return res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+// Update product by ID
 const updateProductHandler = async (req, res) => {
   try {
     const { id } = req.params;
@@ -62,6 +90,7 @@ const updateProductHandler = async (req, res) => {
   }
 };
 
+// Delete product by ID
 const deleteProductHandler = async (req, res) => {
   try {
     const { id } = req.params;
@@ -80,6 +109,7 @@ module.exports = {
   createProductHandler,
   getAllProductsHandler,
   getProductByIdHandler,
+  getProductByCategoryHandler, // Added handler here
   updateProductHandler,
   deleteProductHandler,
 };
