@@ -12,10 +12,6 @@ const portfolioDetailSchema = new mongoose.Schema({
 
 // Product Detail Main Schema (Sub-schema for title and images)
 const productDetailmainSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
   images: [
     {
       type: String, // Can store the file path or URL for the image
@@ -120,10 +116,6 @@ const productDetailmainSchema = new mongoose.Schema({
 
 // Product Detail Schema (Sub-schema for related products and descriptions)
 const productDetailSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
   image: {
     type: String, // Can store the file path or URL for the image
     required: true,

@@ -3,6 +3,7 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const sireperksRoute = require('./sireperks.route');
 const productsRoute = require('./products.route');
+const getQuoteRoute = require('./getquote.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -24,6 +25,10 @@ const defaultRoutes = [
   {
     path: '/products',
     route: productsRoute,
+  },
+  {
+    path: '/getquote',
+    route: getQuoteRoute,
   },
 ];
 

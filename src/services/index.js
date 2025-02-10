@@ -4,3 +4,4 @@ module.exports.tokenService = require('./token.service');
 module.exports.userService = require('./user.service');
 module.exports.sirePerksService = require('./sireperks.service');
 module.exports.productsService = require('./products.service');
+module.exports.getQuoteService = require('./getquote.service');
