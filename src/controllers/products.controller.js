@@ -1,6 +1,7 @@
+const Joi = require('joi'); // if you need Joi validation for category
+const ProductCategory = require('../models/products.model'); // Aapka model
 const productService = require('../services/products.service');
 const { createProduct, updateProduct, getProductById } = require('../validations/products.validation');
-const Joi = require('joi'); // if you need Joi validation for category
 
 // Create a new product
 const createProductHandler = async (req, res) => {
@@ -15,6 +16,24 @@ const createProductHandler = async (req, res) => {
     return res.status(201).json(product);
   } catch (err) {
     return res.status(500).json({ message: 'Server Error' });
+  }
+};
+const getAllProductsFromCategories = async (req, res) => {
+  try {
+    // Sab categories fetch kar lo
+    const categories = await ProductCategory.find();
+
+    let allProducts = [];
+
+    // Har category ka data check karo
+    categories.forEach((category) => {
+      if (category.details && category.details.titlerelatedProducts) {
+        allProducts = [...allProducts, ...category.details.titlerelatedProducts];
+      }
+    });
+    res.status(200).json({ success: true, allProducts });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -110,6 +129,7 @@ const deleteProductHandler = async (req, res) => {
 
 module.exports = {
   createProductHandler,
+  getAllProductsFromCategories,
   getAllProductsHandler,
   getProductByIdHandler,
   getProductByCategoryHandler,
