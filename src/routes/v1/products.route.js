@@ -6,7 +6,7 @@ const productController = require('../../controllers/products.controller');
 
 const router = express.Router();
 
-// POST - Create a new product
+// POST - Create a new product (including details like related products, descriptions)
 router
   .route('/')
   .post(validate(productValidation.createProduct), productController.createProductHandler)

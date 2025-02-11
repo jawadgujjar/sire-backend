@@ -1,17 +1,7 @@
 const mongoose = require('mongoose');
 
-// Portfolio Detail Schema (Only Images)
-const portfolioDetailSchema = new mongoose.Schema({
-  images: [
-    {
-      type: String, // Can store the file path or URL for the image
-      required: true, // Ensure that images are provided
-    },
-  ],
-});
-
-// Product Detail Main Schema (Sub-schema for title and images)
-const productDetailmainSchema = new mongoose.Schema({
+// Product Detail Schema (Sub-schema for title, images, and specifications)
+const productDetailSchema = new mongoose.Schema({
   images: [
     {
       type: String, // Can store the file path or URL for the image
@@ -56,18 +46,6 @@ const productDetailmainSchema = new mongoose.Schema({
       required: false,
     },
   },
-  relatedPortfolio: [
-    {
-      image: {
-        type: String, // Related portfolio image URL or path
-        required: true,
-      },
-      details: {
-        type: portfolioDetailSchema, // Embedding the Portfolio Detail Schema
-        required: true,
-      },
-    },
-  ],
   stockType: [
     {
       image: {
@@ -114,8 +92,8 @@ const productDetailmainSchema = new mongoose.Schema({
   ],
 });
 
-// Product Detail Schema (Sub-schema for related products and descriptions)
-const productDetailSchema = new mongoose.Schema({
+// Product Schema (Main schema for category and products)
+const productSchema = new mongoose.Schema({
   image: {
     type: String, // Can store the file path or URL for the image
     required: true,
@@ -131,7 +109,7 @@ const productDetailSchema = new mongoose.Schema({
         required: true,
       },
       details: {
-        type: productDetailmainSchema, // Embedding the Product Detail Main Schema
+        type: productDetailSchema, // Embedding the Product Detail Schema
         required: true,
       },
     },
@@ -150,8 +128,8 @@ const productDetailSchema = new mongoose.Schema({
   ],
 });
 
-// Product Schema (Main schema)
-const productSchema = new mongoose.Schema({
+// Category Schema (Main schema for product category)
+const categorySchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -160,17 +138,13 @@ const productSchema = new mongoose.Schema({
     type: String, // Can store the file path or URL for the image
     required: true,
   },
-  category: {
-    type: String, // Store the category as a string
-    required: true,
-  },
   details: {
-    type: productDetailSchema, // Embedding the Product Detail Schema
+    type: productSchema, // Embedding the Product Detail Schema
     required: true,
   },
 });
 
-// Product Model
-const Product = mongoose.model('Product', productSchema);
+// Product Model (Renamed to ProductCategory for clarity)
+const ProductCategory = mongoose.model('ProductCategory', categorySchema);
 
-module.exports = Product;
+module.exports = ProductCategory;

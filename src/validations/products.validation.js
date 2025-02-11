@@ -69,7 +69,7 @@ const productDetailSchema = Joi.object({
 const createProduct = Joi.object({
   title: Joi.string().required(),
   image: Joi.string().uri().required(),
-  category: Joi.string().required(),
+  // `category` is part of the category schema, not the root product schema.
   details: productDetailSchema.required(), // Ensures that the 'details' object is required
 });
 
@@ -82,7 +82,6 @@ const getProductById = Joi.object({
 const updateProduct = Joi.object({
   title: Joi.string().optional(),
   image: Joi.string().uri().optional(),
-  category: Joi.string().optional(),
   details: productDetailSchema.optional(), // Optionally updating the 'details'
 });
 

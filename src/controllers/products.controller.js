@@ -10,6 +10,7 @@ const createProductHandler = async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
+    // Assuming the category is nested in the product details (based on the model)
     const product = await productService.createProduct(req.body);
     return res.status(201).json(product);
   } catch (err) {
@@ -51,14 +52,15 @@ const getProductByIdHandler = async (req, res) => {
 const getProductByCategoryHandler = async (req, res) => {
   try {
     const { category } = req.params;
-    
-    // Optionally, validate the category
-    const categorySchema = Joi.string().required();  // Example validation for category
+
+    // Optionally, validate the category (as a string)
+    const categorySchema = Joi.string().required();
     const { error } = categorySchema.validate(category);
     if (error) {
       return res.status(400).json({ message: 'Invalid category' });
     }
 
+    // Fetch products that belong to the given category
     const products = await productService.getProductByCategory(category);
     if (!products || products.length === 0) {
       return res.status(404).json({ message: 'No products found for this category' });
@@ -79,6 +81,7 @@ const updateProductHandler = async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
+    // Update product with the provided ID
     const updatedProduct = await productService.updateProduct(id, req.body);
     if (!updatedProduct) {
       return res.status(404).json({ message: 'Product not found' });
@@ -109,7 +112,7 @@ module.exports = {
   createProductHandler,
   getAllProductsHandler,
   getProductByIdHandler,
-  getProductByCategoryHandler, // Added handler here
+  getProductByCategoryHandler,
   updateProductHandler,
   deleteProductHandler,
 };
