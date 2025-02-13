@@ -4,6 +4,8 @@ const userRoute = require('./user.route');
 const sireperksRoute = require('./sireperks.route');
 const getQuoteRoute = require('./getquote.route');
 const uploadRoute = require('./upload.route');
+const categoryRoute = require('./category.route');
+const portfolioRoute = require('./portfolio.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -29,6 +31,14 @@ const defaultRoutes = [
   {
     path: '/upload',
     route: uploadRoute,
+  },
+  {
+    path: '/category',
+    route: categoryRoute,
+  },
+  {
+    path: '/portfolio',
+    route: portfolioRoute,
   },
 ];
 

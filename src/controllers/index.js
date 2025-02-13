@@ -3,3 +3,5 @@ module.exports.userController = require('./user.controller');
 module.exports.sirePerksController = require('./sireperks.controller');
 module.exports.getQuoteController = require('./getquote.controller');
 module.exports.uploadController = require('./upload.controller');
+module.exports.categoryController = require('./category.controller');
+module.exports.portfolioController = require('./portfolio.controller');
