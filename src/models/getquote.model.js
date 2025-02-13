@@ -23,7 +23,7 @@ const getQuoteSchema = new mongoose.Schema({
     required: true,
   },
   colors: {
-    type: [String], // Array of color choices
+    type: String, // Array of color choices
     required: true,
   },
   quantity: {

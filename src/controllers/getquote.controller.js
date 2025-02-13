@@ -69,5 +69,5 @@ module.exports = {
   getAllQuotesHandler,
   getQuoteByIdHandler,
   updateQuoteHandler,
-  deleteQuoteHandler
+  deleteQuoteHandler,
 };

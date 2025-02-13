@@ -2,10 +2,11 @@ const express = require('express');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const sireperksRoute = require('./sireperks.route');
-const productsRoute = require('./products.route');
 const getQuoteRoute = require('./getquote.route');
 const categoryRoute = require('./category.route');
 const portfolioRoute = require('./portfolio.route');
+const productRoute = require('./products.route');
+const uploadRoute = require('./upload.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -25,10 +26,6 @@ const defaultRoutes = [
     route: sireperksRoute,
   },
   {
-    path: '/products',
-    route: productsRoute,
-  },
-  {
     path: '/getquote',
     route: getQuoteRoute,
   },
@@ -39,6 +36,14 @@ const defaultRoutes = [
   {
     path: '/portfolio',
     route: portfolioRoute,
+  },
+  {
+    path: '/upload',
+    route: uploadRoute,
+  },
+  {
+    path: '/products',
+    route: productRoute,
   },
 ];
 
