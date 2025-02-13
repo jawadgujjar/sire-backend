@@ -1,138 +1,110 @@
-const Joi = require('joi'); // if you need Joi validation for category
-const ProductCategory = require('../models/products.model'); // Aapka model
-const productService = require('../services/products.service');
-const { createProduct, updateProduct, getProductById } = require('../validations/products.validation');
+// controllers/products.controller.js
+const Product = require('../models/products.model');
 
 // Create a new product
 const createProductHandler = async (req, res) => {
   try {
-    const { error } = createProduct.validate(req.body);
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message });
-    }
+    const productData = req.body;
 
-    // Assuming the category is nested in the product details (based on the model)
-    const product = await productService.createProduct(req.body);
-    return res.status(201).json(product);
-  } catch (err) {
-    return res.status(500).json({ message: 'Server Error' });
-  }
-};
-const getAllProductsFromCategories = async (req, res) => {
-  try {
-    // Sab categories fetch kar lo
-    const categories = await ProductCategory.find();
+    // Create new product using the Product model
+    const product = new Product(productData);
+    await product.save();
 
-    let allProducts = [];
-
-    // Har category ka data check karo
-    categories.forEach((category) => {
-      if (category.details && category.details.titlerelatedProducts) {
-        allProducts = [...allProducts, ...category.details.titlerelatedProducts];
-      }
+    res.status(201).json({
+      message: 'Product created successfully',
+      product,
     });
-    res.status(200).json({ success: true, allProducts });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(400).json({
+      message: error.message,
+    });
   }
 };
 
 // Get all products
 const getAllProductsHandler = async (req, res) => {
   try {
-    const products = await productService.getAllProducts();
-    return res.status(200).json(products);
-  } catch (err) {
-    return res.status(500).json({ message: 'Server Error' });
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
   }
 };
 
-// Get product by ID
+// Get a product by ID
 const getProductByIdHandler = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { error } = getProductById.validate({ id });
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message });
-    }
-
-    const product = await productService.getProductById(id);
+    const product = await Product.findById(req.params.id);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
 
-    return res.status(200).json(product);
-  } catch (err) {
-    return res.status(500).json({ message: 'Server Error' });
+// Update a product
+const updateProductHandler = async (req, res) => {
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.status(200).json({
+      message: 'Product updated successfully',
+      updatedProduct,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+// Delete a product
+const deleteProductHandler = async (req, res) => {
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.status(200).json({
+      message: 'Product deleted successfully',
+      deletedProduct,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
   }
 };
 
 // Get products by category
 const getProductByCategoryHandler = async (req, res) => {
   try {
-    const { category } = req.params;
-
-    // Optionally, validate the category (as a string)
-    const categorySchema = Joi.string().required();
-    const { error } = categorySchema.validate(category);
-    if (error) {
-      return res.status(400).json({ message: 'Invalid category' });
-    }
-
-    // Fetch products that belong to the given category
-    const products = await productService.getProductByCategory(category);
-    if (!products || products.length === 0) {
-      return res.status(404).json({ message: 'No products found for this category' });
-    }
-
-    return res.status(200).json(products);
-  } catch (err) {
-    return res.status(500).json({ message: 'Server Error' });
-  }
-};
-
-// Update product by ID
-const updateProductHandler = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { error } = updateProduct.validate(req.body);
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message });
-    }
-
-    // Update product with the provided ID
-    const updatedProduct = await productService.updateProduct(id, req.body);
-    if (!updatedProduct) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
-
-    return res.status(200).json(updatedProduct);
-  } catch (err) {
-    return res.status(500).json({ message: 'Server Error' });
-  }
-};
-
-// Delete product by ID
-const deleteProductHandler = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deletedProduct = await productService.deleteProduct(id);
-    if (!deletedProduct) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
-
-    return res.status(200).json({ message: 'Product deleted successfully' });
-  } catch (err) {
-    return res.status(500).json({ message: 'Server Error' });
+    const products = await Product.find({ category: req.params.category });
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
   }
 };
 
 module.exports = {
   createProductHandler,
-  getAllProductsFromCategories,
   getAllProductsHandler,
   getProductByIdHandler,
-  getProductByCategoryHandler,
   updateProductHandler,
   deleteProductHandler,
+  getProductByCategoryHandler,
 };

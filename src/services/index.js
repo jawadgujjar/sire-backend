@@ -5,3 +5,5 @@ module.exports.userService = require('./user.service');
 module.exports.sirePerksService = require('./sireperks.service');
 module.exports.productsService = require('./products.service');
 module.exports.getQuoteService = require('./getquote.service');
+module.exports.categoryService = require('./category.service');
+module.exports.portfolioService = require('./portfolio.service');

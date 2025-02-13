@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid'); // Import UUID for generating unique SKUs
 
 // Product Detail Schema (Sub-schema for title, images, and specifications)
 const productDetailSchema = new mongoose.Schema({
@@ -92,59 +93,77 @@ const productDetailSchema = new mongoose.Schema({
   ],
 });
 
-// Product Schema (Main schema for category and products)
-const productSchema = new mongoose.Schema({
-  image: {
-    type: String, // Can store the file path or URL for the image
-    required: true,
+// Product Schema (Main schema for product details)
+const productSchema = new mongoose.Schema(
+  {
+    category: {
+      type: mongoose.Schema.Types.ObjectId, // Reference to Category model
+      ref: 'Category', // Reference the 'Category' model
+      required: true, // Make it required so every product must belong to a category
+    },
+    sku: {
+      type: String, // SKU for the product (unique identifier)
+      required: true, // Make SKU required
+      unique: true, // Ensure SKU is unique
+      trim: true, // Ensure there are no extra spaces
+    },
+    image: {
+      type: String, // Can store the file path or URL for the image
+      required: true,
+    },
+    titlerelatedProducts: [
+      {
+        image: {
+          type: String, // Related product image URL or path
+          required: true,
+        },
+        title: {
+          type: String, // Related product title
+          required: true,
+        },
+        details: {
+          type: productDetailSchema, // Embedding the Product Detail Schema
+          required: true,
+        },
+      },
+    ],
+    description: [
+      {
+        title: {
+          type: String, // Title of the description section
+          required: true,
+        },
+        description: {
+          type: String, // Detailed description for the product
+          required: true,
+        },
+      },
+    ],
+    seoTitle: {
+      type: String, // SEO title for the product
+      required: false, // SEO title is optional
+    },
+    seoKeyword: {
+      type: String, // SEO keywords for the product (comma-separated keywords)
+      required: false, // SEO keywords are optional
+    },
+    seoDescription: {
+      type: String, // SEO description for the product
+      required: false, // SEO description is optional
+    },
   },
-  titlerelatedProducts: [
-    {
-      image: {
-        type: String, // Related product image URL or path
-        required: true,
-      },
-      title: {
-        type: String, // Related product title
-        required: true,
-      },
-      details: {
-        type: productDetailSchema, // Embedding the Product Detail Schema
-        required: true,
-      },
-    },
-  ],
-  description: [
-    {
-      title: {
-        type: String, // Title of the description section
-        required: true,
-      },
-      description: {
-        type: String, // Detailed description for the product
-        required: true,
-      },
-    },
-  ],
+  { timestamps: true }
+); // Timestamps for createdAt and updatedAt
+
+// Pre-save middleware to auto-generate SKU
+productSchema.pre('save', function (next) {
+  if (!this.sku) {
+    this.sku = `SKU-${uuidv4().split('-')[0].toUpperCase()}`; // Generate a unique SKU (first part of UUID in uppercase)
+  }
+  next();
 });
 
-// Category Schema (Main schema for product category)
-const categorySchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String, // Can store the file path or URL for the image
-    required: true,
-  },
-  details: {
-    type: productSchema, // Embedding the Product Detail Schema
-    required: true,
-  },
-});
+// Product Model
+const Product = mongoose.model('Product', productSchema);
 
-// Product Model (Renamed to ProductCategory for clarity)
-const ProductCategory = mongoose.model('ProductCategory', categorySchema);
-
-module.exports = ProductCategory;
+module.exports = Product;
