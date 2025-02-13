@@ -51,5 +51,5 @@ module.exports = {
   getAllQuotesService,
   getQuoteByIdService,
   updateQuoteService,
-  deleteQuoteService
+  deleteQuoteService,
 };
