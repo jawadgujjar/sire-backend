@@ -11,6 +11,10 @@ const categorySchema = new mongoose.Schema(
       type: String, // Image can store file path or URL for the category image
       required: true, // Image is required
     },
+    imageMain: {
+      type: String, // Can store the file path or URL for the image
+      required: false,
+    },
     seoTitle: {
       type: String, // SEO title for the category (usually displayed in the title tag of the page)
       required: false, // SEO title is optional

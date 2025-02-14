@@ -4,33 +4,33 @@ const Product = require('../models/products.model');
 // Create a new product
 const createProduct = async (productData) => {
   const product = new Product(productData);
-  await product.save(); // ✅ Yahan await theek jagah hai
-  return product; // ✅ Sirf resolved object return karein
+  await product.save();
+  return product;
 };
 
 // Get all products
 const getAllProducts = async () => {
-  return Product.find(); // ✅ Await hataya, kyunki return ke andar zaroori nahi
+  return Product.find();
 };
 
 // Get a product by ID
 const getProductById = async (productId) => {
-  return Product.findById(productId); // ✅ Await hataya
+  return Product.findById(productId);
 };
 
 // Update a product
 const updateProduct = async (productId, updateData) => {
-  return Product.findByIdAndUpdate(productId, updateData, { new: true }); // ✅ Await hataya
+  return Product.findByIdAndUpdate(productId, updateData, { new: true });
 };
 
 // Delete a product
 const deleteProduct = async (productId) => {
-  return Product.findByIdAndDelete(productId); // ✅ Await hataya
+  return Product.findByIdAndDelete(productId);
 };
 
 // Get products by category
 const getProductsByCategory = async (categoryId) => {
-  return Product.find({ category: categoryId }); // ✅ Await hataya
+  return Product.find({ category: categoryId });
 };
 module.exports = {
   createProduct,

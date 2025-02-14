@@ -4,7 +4,6 @@ const Joi = require('joi');
 const createProduct = Joi.object({
   category: Joi.string().required(),
   sku: Joi.string().optional(), // SKU will be auto-generated if not provided
-  image: Joi.string().uri().required(),
   titlerelatedProducts: Joi.array()
     .items(
       Joi.object({
