@@ -6,3 +6,4 @@ module.exports.categoryController = require('./category.controller');
 module.exports.portfolioController = require('./portfolio.controller');
 module.exports.uploadController = require('./upload.controller');
 module.exports.productsController = require('./products.controller');
+module.exports.blogsController = require('./blogs.controller');

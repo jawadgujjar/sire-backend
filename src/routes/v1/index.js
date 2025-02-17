@@ -6,6 +6,7 @@ const getQuoteRoute = require('./getquote.route');
 const categoryRoute = require('./category.route');
 const portfolioRoute = require('./portfolio.route');
 const productRoute = require('./products.route');
+const blogRoute = require('./blogs.route');
 const uploadRoute = require('./upload.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
@@ -44,6 +45,10 @@ const defaultRoutes = [
   {
     path: '/products',
     route: productRoute,
+  },
+  {
+    path: '/blogs',
+    route: blogRoute,
   },
 ];
 

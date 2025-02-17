@@ -5,3 +5,4 @@ module.exports.GetQuote = require('./getquote.model');
 module.exports.Category = require('./category.model');
 module.exports.Portfolio = require('./portfolio.model');
 module.exports.Product = require('./products.model');
+module.exports.Blog = require('./blogs.model');
