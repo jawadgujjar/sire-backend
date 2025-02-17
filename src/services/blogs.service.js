@@ -3,14 +3,12 @@ const httpStatus = require('http-status');
 const { Blog } = require('../models');
 const ApiError = require('../utils/ApiError');
 
-const createBlog = async (blogData) => {
-  const blog = await Blog.create(blogData);
-  return blog;
+const createBlog = (blogData) => {
+  return Blog.create(blogData); // No need for await here
 };
 
-const getAllBlogs = async () => {
-  const blogs = await Blog.find();
-  return blogs;
+const getAllBlogs = () => {
+  return Blog.find(); // No need for await here
 };
 
 const getBlogById = async (id) => {
@@ -19,6 +17,14 @@ const getBlogById = async (id) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Blog not found');
   }
   return blog;
+};
+
+const getBlogsByCategory = async (categoryId) => {
+  const blogs = await Blog.find({ category: categoryId }).populate('category');
+  if (!blogs.length) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'No blogs found for this category');
+  }
+  return blogs;
 };
 
 const updateBlog = async (id, updateData) => {
@@ -40,6 +46,7 @@ module.exports = {
   createBlog,
   getAllBlogs,
   getBlogById,
+  getBlogsByCategory,
   updateBlog,
   deleteBlog,
 };

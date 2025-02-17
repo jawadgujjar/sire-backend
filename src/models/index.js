@@ -6,3 +6,4 @@ module.exports.Category = require('./category.model');
 module.exports.Portfolio = require('./portfolio.model');
 module.exports.Product = require('./products.model');
 module.exports.Blog = require('./blogs.model');
+module.exports.Contact = require('./contactus.model');

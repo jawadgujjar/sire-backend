@@ -6,3 +6,4 @@ module.exports.categoryValidation = require('./category.validation');
 module.exports.portfolioValidation = require('./portfolio.validation');
 module.exports.productValidation = require('./products.validation');
 module.exports.blogValidation = require('./blogs.validation');
+module.exports.contactusValidation = require('./contactus.validation');
