@@ -102,14 +102,11 @@ const productSchema = new mongoose.Schema(
       required: true, // Make it required so every product must belong to a category
     },
     sku: {
-      type: String, // SKU for the product (unique identifier)
-      required: true, // Make SKU required
-      unique: true, // Ensure SKU is unique
-      trim: true, // Ensure there are no extra spaces
-    },
-    image: {
-      type: String, // Can store the file path or URL for the image
-      required: true,
+      type: String,
+      required: false,
+      unique: true,
+      trim: true,
+      default: () => `SKU-${uuidv4().split('-')[0].toUpperCase()}`,
     },
     titlerelatedProducts: [
       {
@@ -158,7 +155,7 @@ const productSchema = new mongoose.Schema(
 // Pre-save middleware to auto-generate SKU
 productSchema.pre('save', function (next) {
   if (!this.sku) {
-    this.sku = `SKU-${uuidv4().split('-')[0].toUpperCase()}`; // Generate a unique SKU (first part of UUID in uppercase)
+    this.sku = `SKU-${uuidv4().split('-')[0].toUpperCase()}`;
   }
   next();
 });
