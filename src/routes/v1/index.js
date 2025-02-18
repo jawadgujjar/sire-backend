@@ -8,6 +8,8 @@ const portfolioRoute = require('./portfolio.route');
 const productRoute = require('./products.route');
 const blogRoute = require('./blogs.route');
 const contactusRoute = require('./contactus.route');
+const aboutusRoute = require('./aboutus.route');
+const privacyRoute = require('./privacy.route');
 const uploadRoute = require('./upload.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
@@ -54,6 +56,14 @@ const defaultRoutes = [
   {
     path: '/contactus',
     route: contactusRoute,
+  },
+  {
+    path: '/aboutus',
+    route: aboutusRoute,
+  },
+  {
+    path: '/privacy',
+    route: privacyRoute,
   },
 ];
 

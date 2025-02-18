@@ -8,3 +8,5 @@ module.exports.uploadController = require('./upload.controller');
 module.exports.productsController = require('./products.controller');
 module.exports.blogsController = require('./blogs.controller');
 module.exports.contactusController = require('./contactus.controller');
+module.exports.aboutusController = require('./aboutus.controller');
+module.exports.privacyController = require('./privacy.controller');

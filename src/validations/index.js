@@ -7,3 +7,5 @@ module.exports.portfolioValidation = require('./portfolio.validation');
 module.exports.productValidation = require('./products.validation');
 module.exports.blogValidation = require('./blogs.validation');
 module.exports.contactusValidation = require('./contactus.validation');
+module.exports.aboutusValidation = require('./aboutus.validation');
+module.exports.privacyValidation = require('./privacy.validation');
