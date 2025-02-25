@@ -10,7 +10,11 @@ const blogRoute = require('./blogs.route');
 const contactusRoute = require('./contactus.route');
 const aboutusRoute = require('./aboutus.route');
 const privacyRoute = require('./privacy.route');
+const termRoute = require('./term.route');
+const newsletterRoute = require('./newsletter.route');
 const uploadRoute = require('./upload.route');
+const testimonialRoute = require('./testimonial.route');
+const searchtrackerRoute = require('./searchtracker.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -64,6 +68,22 @@ const defaultRoutes = [
   {
     path: '/privacy',
     route: privacyRoute,
+  },
+  {
+    path: '/term',
+    route: termRoute,
+  },
+  {
+    path: '/newsletter',
+    route: newsletterRoute,
+  },
+  {
+    path: '/testimonial',
+    route: testimonialRoute,
+  },
+  {
+    path: '/searchtracker',
+    route: searchtrackerRoute,
   },
 ];
 

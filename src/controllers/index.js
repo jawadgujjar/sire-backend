@@ -10,3 +10,7 @@ module.exports.blogsController = require('./blogs.controller');
 module.exports.contactusController = require('./contactus.controller');
 module.exports.aboutusController = require('./aboutus.controller');
 module.exports.privacyController = require('./privacy.controller');
+module.exports.termController = require('./term.controller');
+module.exports.newsletterController = require('./newsletter.controller');
+module.exports.testimonialController = require('./testimonial.controller.');
+module.exports.searchtrackerController = require('./searchtracker.controller');

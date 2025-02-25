@@ -11,3 +11,7 @@ module.exports.blogService = require('./blogs.service');
 module.exports.contactusService = require('./contactus.service');
 module.exports.aboutusService = require('./aboutus.service');
 module.exports.privacyService = require('./privacy.service');
+module.exports.termService = require('./term.service');
+module.exports.newsletterService = require('./newsletter.service');
+module.exports.testimonialService = require('./testimonial.service');
+module.exports.searchtrackerService = require('./searchtracker.service');

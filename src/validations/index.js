@@ -9,3 +9,7 @@ module.exports.blogValidation = require('./blogs.validation');
 module.exports.contactusValidation = require('./contactus.validation');
 module.exports.aboutusValidation = require('./aboutus.validation');
 module.exports.privacyValidation = require('./privacy.validation');
+module.exports.termValidation = require('./term.validation');
+module.exports.newsletterValidation = require('./newsletter.validation');
+module.exports.testimonialValidation = require('./testimonial.validation');
+module.exports.searchtrackerValidation = require('./searchtracker.validation');

@@ -9,3 +9,7 @@ module.exports.Blog = require('./blogs.model');
 module.exports.Contact = require('./contactus.model');
 module.exports.AboutUs = require('./aboutus.model');
 module.exports.Privacy = require('./privacy.model');
+module.exports.Term = require('./term.model');
+module.exports.Newsletter = require('./newsletter.model');
+module.exports.Testimonial = require('./testimonial.model');
+module.exports.SearchTracker = require('./searchtracker.model');
