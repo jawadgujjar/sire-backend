@@ -15,3 +15,5 @@ module.exports.termService = require('./term.service');
 module.exports.newsletterService = require('./newsletter.service');
 module.exports.testimonialService = require('./testimonial.service');
 module.exports.searchtrackerService = require('./searchtracker.service');
+module.exports.carouselimageService = require('./carouselimage.service');
+module.exports.customerfeedbackService = require('./customerfeedback.service');

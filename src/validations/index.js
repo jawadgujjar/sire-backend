@@ -13,3 +13,5 @@ module.exports.termValidation = require('./term.validation');
 module.exports.newsletterValidation = require('./newsletter.validation');
 module.exports.testimonialValidation = require('./testimonial.validation');
 module.exports.searchtrackerValidation = require('./searchtracker.validation');
+module.exports.carouselimageValidation = require('./carouselimage.validation');
+module.exports.customerfeedbackValidation = require('./customerfeedback.validation');

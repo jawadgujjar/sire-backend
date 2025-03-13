@@ -14,7 +14,9 @@ const termRoute = require('./term.route');
 const newsletterRoute = require('./newsletter.route');
 const uploadRoute = require('./upload.route');
 const testimonialRoute = require('./testimonial.route');
+const carouselimageRoute = require('./carouselimage.route');
 const searchtrackerRoute = require('./searchtracker.route');
+const customerfeedbackRoute = require('./customerfeedback.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -84,6 +86,14 @@ const defaultRoutes = [
   {
     path: '/searchtracker',
     route: searchtrackerRoute,
+  },
+  {
+    path: '/carouselimage',
+    route: carouselimageRoute,
+  },
+  {
+    path: '/customerfeedback',
+    route: customerfeedbackRoute,
   },
 ];
 

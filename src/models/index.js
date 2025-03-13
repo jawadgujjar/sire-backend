@@ -13,3 +13,5 @@ module.exports.Term = require('./term.model');
 module.exports.Newsletter = require('./newsletter.model');
 module.exports.Testimonial = require('./testimonial.model');
 module.exports.SearchTracker = require('./searchtracker.model');
+module.exports.CarouselImage = require('./carouselimage.model');
+module.exports.CustomerFeedback = require('./customerfeedback.model');
