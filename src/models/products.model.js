@@ -99,7 +99,6 @@ const productSchema = new mongoose.Schema(
     category: {
       type: mongoose.Schema.Types.ObjectId, // Reference to Category model
       ref: 'Category', // Reference the 'Category' model
-      required: true, // Make it required so every product must belong to a category
     },
     sku: {
       type: String,
@@ -147,6 +146,10 @@ const productSchema = new mongoose.Schema(
     seoDescription: {
       type: String, // SEO description for the product
       required: false, // SEO description is optional
+    },
+    order: {
+      type: Number,
+      default: 0, // Default order if not provided
     },
   },
   { timestamps: true }

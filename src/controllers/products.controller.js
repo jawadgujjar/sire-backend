@@ -99,6 +99,27 @@ const getProductByCategoryHandler = async (req, res) => {
     });
   }
 };
+const sortProductsHandler = async (req, res) => {
+  const sortedProducts = req.body.products; // Products array with the new sorted order
+
+  try {
+    // Use Promise.all to handle concurrent updates
+    const updatePromises = sortedProducts.map((product, index) => {
+      return Product.findByIdAndUpdate(product._id, { order: index });
+    });
+
+    await Promise.all(updatePromises); // Wait for all updates to finish
+
+    res.status(200).json({
+      message: 'Product order updated successfully',
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Failed to update product order',
+      error: error.message,
+    });
+  }
+};
 
 module.exports = {
   createProductHandler,
@@ -107,4 +128,5 @@ module.exports = {
   updateProductHandler,
   deleteProductHandler,
   getProductByCategoryHandler,
+  sortProductsHandler,
 };

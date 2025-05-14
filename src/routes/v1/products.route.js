@@ -22,4 +22,7 @@ router
 // GET - Get products by category
 router.route('/category/:category').get(productController.getProductByCategoryHandler); // Get products by category
 
+// POST - Sort products
+router.route('/sort').post(productController.sortProductsHandler); // Sort products by order
+
 module.exports = router;
