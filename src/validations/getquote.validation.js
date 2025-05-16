@@ -5,7 +5,7 @@ const createQuote = {
   body: Joi.object().keys({
     length: Joi.number().required(),
     width: Joi.number().required(),
-    depth: Joi.number().required(),
+    height: Joi.number().required(),
     inches: Joi.string().optional(),
     chooseProduct: Joi.string().required(),
     colors: Joi.string().required(),
@@ -15,6 +15,9 @@ const createQuote = {
     email: Joi.string().email().required(),
     uploadFile: Joi.string().optional(),
     message: Joi.string().optional(),
+    material: Joi.string().optional(),
+    finishOption: Joi.string().optional(),
+    companyName: Joi.string().optional(),
   }),
 };
 
@@ -33,7 +36,7 @@ const updateQuote = {
   body: Joi.object().keys({
     length: Joi.number().optional(),
     width: Joi.number().optional(),
-    depth: Joi.number().optional(),
+    height: Joi.number().optional(),
     inches: Joi.string().optional(),
     chooseProduct: Joi.string().optional(),
     colors: Joi.string().required(),
@@ -43,6 +46,9 @@ const updateQuote = {
     email: Joi.string().email().optional(),
     uploadFile: Joi.string().optional(),
     message: Joi.string().optional(),
+    material: Joi.string().optional(),
+    finishOption: Joi.string().optional(),
+    companyName: Joi.string().optional(),
   }),
 };
 
