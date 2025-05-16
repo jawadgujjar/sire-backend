@@ -10,7 +10,7 @@ const getQuoteSchema = new mongoose.Schema({
     type: Number, // Width of the product
     required: true,
   },
-  depth: {
+  height: {
     type: Number, // Depth of the product
     required: true,
   },
@@ -46,7 +46,19 @@ const getQuoteSchema = new mongoose.Schema({
     type: String, // URL or path to the uploaded file (can store the file URL if stored on a server)
     required: false,
   },
+  material: {
+    type: String, // URL or path to the uploaded file (can store the file URL if stored on a server)
+    required: false,
+  },
+  finishOption: {
+    type: String, // URL or path to the uploaded file (can store the file URL if stored on a server)
+    required: false,
+  },
   message: {
+    type: String, // Any additional message from the user
+    required: false,
+  },
+  companyName: {
     type: String, // Any additional message from the user
     required: false,
   },
