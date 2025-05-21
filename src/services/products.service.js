@@ -1,42 +1,38 @@
-// services/product.service.js
 const Product = require('../models/products.model');
 
-// Create a new product
-const createProduct = async (productData) => {
-  const product = new Product(productData);
+const createProduct = async (data) => {
+  return Product.create(data);
+};
+
+const getProductById = async (id) => {
+  return Product.findById(id).populate('categories subcategories');
+};
+
+const getProductsByCategoryId = async (categoryId) => {
+  return Product.find({ categories: categoryId });
+};
+
+const getProductsBySubCategoryId = async (subCategoryId) => {
+  return Product.find({ subcategories: subCategoryId });
+};
+
+const updateProductById = async (productId, updateBody) => {
+  const product = await Product.findById(productId);
+  if (!product) throw new Error('Product not found');
+  Object.assign(product, updateBody);
   await product.save();
   return product;
 };
 
-// Get all products
-const getAllProducts = async () => {
-  return Product.find();
-};
-
-// Get a product by ID
-const getProductById = async (productId) => {
-  return Product.findById(productId);
-};
-
-// Update a product
-const updateProduct = async (productId, updateData) => {
-  return Product.findByIdAndUpdate(productId, updateData, { new: true });
-};
-
-// Delete a product
-const deleteProduct = async (productId) => {
+const deleteProductById = async (productId) => {
   return Product.findByIdAndDelete(productId);
 };
 
-// Get products by category
-const getProductsByCategory = async (categoryId) => {
-  return Product.find({ category: categoryId });
-};
 module.exports = {
   createProduct,
-  getAllProducts,
   getProductById,
-  updateProduct,
-  deleteProduct,
-  getProductsByCategory,
+  getProductsByCategoryId,
+  getProductsBySubCategoryId,
+  updateProductById,
+  deleteProductById,
 };
