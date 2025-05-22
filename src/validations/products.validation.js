@@ -9,6 +9,7 @@ const createProduct = {
     subcategories: Joi.array().items(Joi.string().custom(objectId)),
     googleProductCategory: Joi.string(),
     productType: Joi.string(),
+    pdfImage: Joi.string(),
     title: Joi.string().required(),
     image: Joi.string().required(),
     additionalImages: Joi.array().items(Joi.string()),

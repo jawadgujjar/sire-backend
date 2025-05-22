@@ -77,7 +77,6 @@ const productSchema = new mongoose.Schema(
     gtin: { type: String, required: true }, // Global Trade Item Number
     mpn: { type: String, required: true }, // Manufacturer Part Number
 
-    // Categorization
     categories: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -106,6 +105,7 @@ const productSchema = new mongoose.Schema(
     image: { type: String, required: true }, // Main image (800x800+ recommended)
     additionalImages: [String], // At least 2-3 extra images
     description: { type: String, required: true, minlength: 150 }, // Detailed description
+    pdfImage: { type: String },
     brand: { type: String, default: 'SirePrinting', required: true },
     condition: {
       type: String,

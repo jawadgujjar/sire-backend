@@ -1,13 +1,8 @@
 const SubCategory = require('../models/subcategory.model');
 
 // Create subcategory
-const createSubCategoryService = async (subCategoryData) => {
-  try {
-    const subCategory = await SubCategory.create(subCategoryData);
-    return subCategory;
-  } catch (error) {
-    throw new Error(error.message);
-  }
+const createSubCategoryService = async (data) => {
+  return SubCategory.create(data);
 };
 
 // Get all subcategories
