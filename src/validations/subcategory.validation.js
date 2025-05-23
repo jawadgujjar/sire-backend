@@ -1,12 +1,21 @@
-// validations/categoryValidation.js
 const Joi = require('joi');
+const mongoose = require('mongoose');
 
-const detailSchema = Joi.object({
-  detailDescription: Joi.string().optional().max(1000),
-  image: Joi.string().optional().uri(),
-});
+const objectId = (value, helpers) => {
+  if (!mongoose.Types.ObjectId.isValid(value)) {
+    return helpers.message('"{{#label}}" must be a valid ObjectId');
+  }
+  return value;
+};
 
-const createCategory = Joi.object({
+const detailsSchema = Joi.array().items(
+  Joi.object({
+    detailDescription: Joi.string().optional().max(1000),
+    image: Joi.string().optional().uri(),
+  })
+);
+
+const createSubCategory = Joi.object({
   title: Joi.string().required().max(100),
   image: Joi.string().required().uri(),
   pageImage: Joi.string().optional().uri(),
@@ -16,10 +25,11 @@ const createCategory = Joi.object({
   seoTitle: Joi.string().optional().max(150),
   seoKeyword: Joi.string().optional().max(200),
   seoDescription: Joi.string().optional().max(500),
-  details: Joi.array().items(detailSchema).optional(),
+  categoryId: Joi.string().required().custom(objectId, 'ObjectId Validation'),
+  details: detailsSchema.optional(),
 });
 
-const updateCategory = Joi.object({
+const updateSubCategory = Joi.object({
   title: Joi.string().optional().max(100),
   image: Joi.string().optional().uri(),
   pageImage: Joi.string().optional().uri(),
@@ -29,7 +39,11 @@ const updateCategory = Joi.object({
   seoTitle: Joi.string().optional().max(150),
   seoKeyword: Joi.string().optional().max(200),
   seoDescription: Joi.string().optional().max(500),
-  details: Joi.array().items(detailSchema).optional(),
+  categoryId: Joi.string().optional().custom(objectId, 'ObjectId Validation'),
+  details: detailsSchema.optional(),
 });
 
-module.exports = { createCategory, updateCategory };
+module.exports = {
+  createSubCategory,
+  updateSubCategory,
+};
