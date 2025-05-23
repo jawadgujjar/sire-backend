@@ -1,24 +1,16 @@
 const express = require('express');
-const validate = require('../../middlewares/validate');
-const blogValidation = require('../../validations/blogs.validation');
-const blogController = require('../../controllers/blogs.controller');
 
 const router = express.Router();
+const blogController = require('../../controllers/blogs.controller');
 
-// POST - Create a new blog
-router
-  .route('/')
-  .post(validate(blogValidation.createBlog), blogController.createBlogHandler)
-  .get(blogController.getAllBlogsHandler); // Get all blogs
+router.post('/', blogController.createBlog);
+router.get('/', blogController.getAllBlogs);
+router.get('/:id', blogController.getBlogById);
+router.put('/:id', blogController.updateBlog);
+router.delete('/:id', blogController.deleteBlog);
 
-// GET - Get blog by ID
-router
-  .route('/:id')
-  .get(validate(blogValidation.getBlogById), blogController.getBlogByIdHandler)
-  .patch(validate(blogValidation.updateBlog), blogController.updateBlogHandler)
-  .delete(validate(blogValidation.deleteBlog), blogController.deleteBlogHandler);
-
-// GET - Get blogs by category
-router.route('/category/:category').get(blogController.getBlogsByCategoryHandler); // Get blogs by category
+// Extra routes
+router.get('/byauthor/:authorId', blogController.getByAuthorId);
+router.get('/bycategory/:categoryId', blogController.getByCategoryId);
 
 module.exports = router;

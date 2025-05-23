@@ -1,50 +1,38 @@
-// validations/blog.validation.js
 const Joi = require('joi');
 
-const createBlog = {
-  body: Joi.object().keys({
-    title: Joi.string().required(),
-    description: Joi.string().required(),
-    image: Joi.string().uri().required(),
-    category: Joi.string().length(24).hex().required(),
-    blogDetail: Joi.array()
-      .items(
-        Joi.object().keys({
-          title: Joi.string().required(),
-          description: Joi.string().required(),
-          image: Joi.string().uri().required(),
-        })
-      )
-      .required(),
-  }),
-};
+const detailSchema = Joi.object({
+  detailTitle: Joi.string().allow('').optional(),
+  detailDescription: Joi.string().allow('').optional(),
+  images: Joi.array().items(Joi.string()).optional(),
+  table: Joi.array()
+    .items(
+      Joi.object({
+        title: Joi.string().required(),
+        points: Joi.array().items(Joi.string()).optional(),
+      })
+    )
+    .optional(),
+});
 
-const updateBlog = {
-  body: Joi.object().keys({
-    title: Joi.string().optional(),
-    description: Joi.string().optional(),
-    image: Joi.string().uri().optional(),
-    category: Joi.string().length(24).hex().optional(),
-    blogDetail: Joi.array()
-      .items(
-        Joi.object().keys({
-          title: Joi.string().optional(),
-          description: Joi.string().optional(),
-          image: Joi.string().uri().optional(),
-        })
-      )
-      .optional(),
-  }),
-};
+const createBlogSchema = Joi.object({
+  blogAuthor: Joi.string().required(),
+  blogCategory: Joi.string().required(),
+  title: Joi.string().required(),
+  image: Joi.string().required(),
+  details: Joi.array().items(detailSchema).optional(),
+  hasCarousel: Joi.boolean().optional(),
+});
 
-const getBlogsByCategory = {
-  params: Joi.object().keys({
-    category: Joi.string().length(24).hex().required(),
-  }),
-};
+const updateBlogSchema = Joi.object({
+  blogAuthor: Joi.string().required(),
+  blogCategory: Joi.string().required(),
+  title: Joi.string().required(),
+  image: Joi.string().required(),
+  details: Joi.array().items(detailSchema).optional(),
+  hasCarousel: Joi.boolean().optional(),
+});
 
 module.exports = {
-  createBlog,
-  updateBlog,
-  getBlogsByCategory,
+  createBlogSchema,
+  updateBlogSchema,
 };
