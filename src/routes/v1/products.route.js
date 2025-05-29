@@ -1,4 +1,3 @@
-// routes/products.route.js
 const express = require('express');
 const validate = require('../../middlewares/validate');
 const productValidation = require('../../validations/products.validation');
@@ -6,23 +5,20 @@ const productController = require('../../controllers/products.controller');
 
 const router = express.Router();
 
-// POST - Create a new product
+router.route('/').post(validate(productValidation.createProduct), productController.createProduct);
+
 router
-  .route('/')
-  .post(validate(productValidation.createProduct), productController.createProductHandler)
-  .get(productController.getAllProductsHandler); // Get all products
+  .route('/:productId')
+  .get(validate(productValidation.getProductById), productController.getProduct)
+  .patch(validate(productValidation.updateProduct), productController.updateProduct)
+  .delete(validate(productValidation.deleteProduct), productController.deleteProduct);
 
-// GET - Get product by ID
 router
-  .route('/:id')
-  .get(validate(productValidation.getProductById), productController.getProductByIdHandler)
-  .patch(validate(productValidation.updateProduct), productController.updateProductHandler)
-  .delete(validate(productValidation.deleteProduct), productController.deleteProductHandler);
+  .route('/category/:categoryId')
+  .get(validate(productValidation.getByCategoryId), productController.getProductsByCategory);
 
-// GET - Get products by category
-router.route('/category/:category').get(productController.getProductByCategoryHandler); // Get products by category
-
-// POST - Sort products
-router.route('/sort').post(productController.sortProductsHandler); // Sort products by order
+router
+  .route('/subcategory/:subCategoryId')
+  .get(validate(productValidation.getBySubCategoryId), productController.getProductsBySubCategory);
 
 module.exports = router;

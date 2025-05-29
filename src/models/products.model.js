@@ -1,161 +1,174 @@
 const mongoose = require('mongoose');
-const { v4: uuidv4 } = require('uuid'); // Import UUID for generating unique SKUs
+const { v4: uuidv4 } = require('uuid');
 
-// Product Detail Schema (Sub-schema for title, images, and specifications)
-const productDetailSchema = new mongoose.Schema({
-  images: [
+// ================== SUB-SCHEMAS ================== //
+const variantDetailSchema = new mongoose.Schema({
+  material: { type: [String], required: true }, // e.g., ["Kraft Paper", "Cardboard"]
+  colormodel: { type: [String], required: true }, // e.g., ["CMYK", "Pantone"]
+  finishing: { type: [String], required: true }, // e.g., ["Matte", "Glossy"]
+  addon: [String], // e.g., ["Handle Cutouts", "Foam Inserts"]
+  turnaround: { type: [String], required: true }, // e.g., ["5 Days", "Express 24H"]
+  faqs: [
     {
-      type: String, // Can store the file path or URL for the image
-      required: true,
-    },
-  ],
-  specifications: {
-    boxStyle: {
-      type: String, // Store box style information
-      required: false,
-    },
-    dimensions: {
-      type: String, // Store dimensions of the product
-      required: false,
-    },
-    quantity: {
-      type: Number, // Store quantity of the product
-      required: false,
-    },
-    includedOptions: {
-      type: String, // Store included options for the product
-      required: false,
-    },
-    additionalOptions: {
-      type: String, // Store any additional options for the product
-      required: false,
-    },
-    proof: {
-      type: String, // Store proof (like a sample or verification)
-      required: false,
-    },
-    shipping: {
-      type: String, // Store shipping details or shipping options
-      required: false,
-    },
-    preferredDesignFile: {
-      type: String, // Store the preferred design file or link
-      required: false,
-    },
-    assembling: {
-      type: String, // Store assembling details for the product
-      required: false,
-    },
-  },
-  stockType: [
-    {
-      image: {
-        type: String, // Stock type image URL or path
-        required: true,
-      },
-      title: {
-        type: String, // Title for the stock type
-        required: true,
-      },
-      description: {
-        type: String, // Description of the stock type
-        required: true,
-      },
-    },
-  ],
-  finishingAssortment: [
-    {
-      image: {
-        type: String, // Finishing assortment image URL or path
-        required: true,
-      },
-      title: {
-        type: String, // Title for the finishing assortment
-        required: true,
-      },
-      description: {
-        type: String, // Description of the finishing assortment
-        required: true,
-      },
-    },
-  ],
-  productDescription: [
-    {
-      title: {
-        type: String, // Title of the product description section
-        required: true,
-      },
-      description: {
-        type: String, // Detailed description for the product section
-        required: true,
-      },
+      question: String,
+      answer: String,
     },
   ],
 });
 
-// Product Schema (Main schema for product details)
+const variantSpecificationSchema = new mongoose.Schema({
+  image: { type: String, required: true },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+});
+
+const variantSchema = new mongoose.Schema({
+  variantTitle: { type: String, required: true },
+  variantDescription: { type: String, required: true },
+  sku: {
+    type: String,
+    default: () => `SKU-${uuidv4().split('-')[0].toUpperCase()}`,
+    unique: true,
+  },
+  price: { type: Number, required: true },
+  salePrice: Number, // For promotions
+  dimensions: {
+    length: { type: Number, required: true },
+    width: { type: Number, required: true },
+    height: { type: Number, required: true },
+    unit: { type: String, default: 'in' },
+  },
+  weight: {
+    value: { type: Number, required: true },
+    unit: { type: String, default: 'oz' },
+  },
+  variantDetail: { type: variantDetailSchema, required: true },
+  variantSpecifications: [variantSpecificationSchema],
+  detailTitle: String,
+  detailSubtitle: String,
+  detailDescription: [
+    {
+      description: String,
+      image: String,
+    },
+  ],
+});
+
+const specificationSchema = new mongoose.Schema({
+  image: { type: String, required: true },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+});
+
+const shippingSchema = new mongoose.Schema({
+  country: { type: String, default: 'US', required: true },
+  region: String, // e.g., "California"
+  service: { type: String, default: 'Standard', required: true },
+  price: { type: Number, default: 0, required: true },
+  minHandlingTime: { type: Number, default: 1 }, // in days
+  maxHandlingTime: { type: Number, default: 3 }, // in days
+});
+
+// ================== MAIN PRODUCT SCHEMA ================== //
 const productSchema = new mongoose.Schema(
   {
-    category: {
-      type: mongoose.Schema.Types.ObjectId, // Reference to Category model
-      ref: 'Category', // Reference the 'Category' model
-    },
-    sku: {
+    // Core Identifiers
+    identifierExists: { type: Boolean, default: true },
+    gtin: { type: String, required: true }, // Global Trade Item Number
+    mpn: { type: String, required: true }, // Manufacturer Part Number
+
+    categories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required: true,
+      },
+    ],
+    subcategories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'SubCategory',
+      },
+    ],
+    googleProductCategory: {
       type: String,
-      required: false,
-      unique: true,
-      trim: true,
-      default: () => `SKU-${uuidv4().split('-')[0].toUpperCase()}`,
+      required: true,
+      default: 'Office Supplies > General Office Supplies > Shipping Supplies > Boxes',
     },
-    titlerelatedProducts: [
+    productType: {
+      type: String,
+      default: 'Packaging Boxes>Custom Printed Boxes',
+    },
+
+    // Product Content
+    title: { type: String, required: true },
+    image: { type: String, required: true }, // Main image (800x800+ recommended)
+    additionalImages: [String], // At least 2-3 extra images
+    description: { type: String, required: true, minlength: 150 }, // Detailed description
+    pdfImage: { type: String },
+    brand: { type: String, default: 'SirePrinting', required: true },
+    condition: {
+      type: String,
+      enum: ['new', 'used', 'refurbished'],
+      default: 'new',
+      required: true,
+    },
+    availability: {
+      type: String,
+      enum: ['in stock', 'out of stock', 'preorder'],
+      default: 'in stock',
+      required: true,
+    },
+
+    // Pricing
+    price: { type: Number, required: true },
+    priceCurrency: { type: String, default: 'USD', required: true },
+    salePrice: Number,
+    salePriceEffectiveDate: {
+      start: Date,
+      end: Date,
+    },
+
+    // Shipping
+    shipping: [shippingSchema],
+    shippingWeight: {
+      value: Number,
+      unit: { type: String, default: 'oz' },
+    },
+
+    // Variants
+    variants: [variantSchema],
+
+    // Specifications
+    specifications: [specificationSchema],
+
+    // Reviews
+    reviews: [
       {
-        image: {
-          type: String, // Related product image URL or path
-          required: true,
-        },
-        title: {
-          type: String, // Related product title
-          required: true,
-        },
-        details: {
-          type: productDetailSchema, // Embedding the Product Detail Schema
-          required: true,
-        },
+        name: String,
+        rating: { type: Number, min: 1, max: 5 },
+        comment: String,
+        date: { type: Date, default: Date.now },
       },
     ],
-    description: [
-      {
-        title: {
-          type: String, // Title of the description section
-          required: true,
-        },
-        description: {
-          type: String, // Detailed description for the product
-          required: true,
-        },
-      },
-    ],
-    seoTitle: {
-      type: String, // SEO title for the product
-      required: false, // SEO title is optional
-    },
-    seoKeyword: {
-      type: String, // SEO keywords for the product (comma-separated keywords)
-      required: false, // SEO keywords are optional
-    },
-    seoDescription: {
-      type: String, // SEO description for the product
-      required: false, // SEO description is optional
-    },
-    order: {
-      type: Number,
-      default: 0, // Default order if not provided
-    },
+    averageRating: { type: Number, default: 0 },
+
+    // SEO
+    seoTitle: String,
+    seoDescription: String,
+    seoKeyword: [String],
+
+    // Google Shopping Attributes
+    adult: { type: Boolean, default: false },
+    isBundle: { type: Boolean, default: false },
+    multipack: { type: Number, default: 1 },
+    customizable: { type: Boolean, default: true },
+    minimumOrderQuantity: { type: Number, default: 1 },
   },
   { timestamps: true }
-); // Timestamps for createdAt and updatedAt
+);
 
-// Pre-save middleware to auto-generate SKU
+// Auto-generate SKU if not provided
 productSchema.pre('save', function (next) {
   if (!this.sku) {
     this.sku = `SKU-${uuidv4().split('-')[0].toUpperCase()}`;
@@ -163,7 +176,4 @@ productSchema.pre('save', function (next) {
   next();
 });
 
-// Product Model
-const Product = mongoose.model('Product', productSchema);
-
-module.exports = Product;
+module.exports = mongoose.model('Product', productSchema);

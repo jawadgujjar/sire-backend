@@ -3,18 +3,8 @@ const subCategoryService = require('../services/subcategory.service'); // Import
 // Create new subcategory
 const createSubCategory = async (req, res) => {
   try {
-    const { title, image, categoryId, seoTitle, seoKeyword, seoDescription } = req.body;
+    const subCategory = await subCategoryService.createSubCategoryService(req.body);
 
-    const subCategoryData = {
-      title,
-      image,
-      categoryId,
-      seoTitle,
-      seoKeyword,
-      seoDescription,
-    };
-
-    const subCategory = await subCategoryService.createSubCategoryService(subCategoryData);
     return res.status(201).json({
       message: 'Subcategory created successfully',
       subCategory,

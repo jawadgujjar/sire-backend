@@ -3,17 +3,8 @@ const categoryService = require('../services/category.service'); // Import categ
 // Controller to create a new category
 const createCategory = async (req, res) => {
   try {
-    const { title, image, seoTitle, seoKeyword, seoDescription } = req.body;
+    const category = await categoryService.createCategoryService(req.body);
 
-    const categoryData = {
-      title,
-      image,
-      seoTitle, // Adding SEO fields
-      seoKeyword, // Adding SEO fields
-      seoDescription, // Adding SEO fields
-    };
-
-    const category = await categoryService.createCategoryService(categoryData);
     return res.status(201).json({
       message: 'Category created successfully',
       category,

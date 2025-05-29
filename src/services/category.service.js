@@ -1,13 +1,8 @@
 const Category = require('../models/category.model'); // Import Category model
 
 // Service to create a new category
-const createCategoryService = async (categoryData) => {
-  try {
-    const category = await Category.create(categoryData); // Create and save the category with SEO fields
-    return category;
-  } catch (error) {
-    throw new Error(error.message); // If an error occurs, throw it
-  }
+const createCategoryService = async (data) => {
+  return Category.create(data);
 };
 
 // Service to get all categories
