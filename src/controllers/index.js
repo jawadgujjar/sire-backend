@@ -19,3 +19,4 @@ module.exports.testimonialController = require('./testimonial.controller.');
 module.exports.searchtrackerController = require('./searchtracker.controller');
 module.exports.carouselimageController = require('./carouselimage.controller');
 module.exports.customerfeedbackController = require('./customerfeedback.controller');
+module.exports.faqController = require('./faq.controller');

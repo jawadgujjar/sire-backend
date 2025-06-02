@@ -20,6 +20,7 @@ const testimonialRoute = require('./testimonial.route');
 const carouselimageRoute = require('./carouselimage.route');
 const searchtrackerRoute = require('./searchtracker.route');
 const customerfeedbackRoute = require('./customerfeedback.route');
+const faqRoute = require('./faq.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -109,6 +110,10 @@ const defaultRoutes = [
   {
     path: '/customerfeedback',
     route: customerfeedbackRoute,
+  },
+  {
+    path: '/faq',
+    route: faqRoute,
   },
 ];
 

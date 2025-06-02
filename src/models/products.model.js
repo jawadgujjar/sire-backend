@@ -3,15 +3,15 @@ const { v4: uuidv4 } = require('uuid');
 
 // ================== SUB-SCHEMAS ================== //
 const variantDetailSchema = new mongoose.Schema({
-  material: { type: [String], required: true }, // e.g., ["Kraft Paper", "Cardboard"]
-  colormodel: { type: [String], required: true }, // e.g., ["CMYK", "Pantone"]
-  finishing: { type: [String], required: true }, // e.g., ["Matte", "Glossy"]
-  addon: [String], // e.g., ["Handle Cutouts", "Foam Inserts"]
-  turnaround: { type: [String], required: true }, // e.g., ["5 Days", "Express 24H"]
+  material: { type: [String], required: true },
+  colormodel: { type: [String], required: true },
+  finishing: { type: [String], required: true },
+  addon: { type: [String], default: [] },
+  turnaround: { type: [String], required: true },
   faqs: [
     {
-      question: String,
-      answer: String,
+      question: { type: String },
+      answer: { type: String },
     },
   ],
 });
@@ -29,9 +29,10 @@ const variantSchema = new mongoose.Schema({
     type: String,
     default: () => `SKU-${uuidv4().split('-')[0].toUpperCase()}`,
     unique: true,
+    index: true,
   },
   price: { type: Number, required: true },
-  salePrice: Number, // For promotions
+  salePrice: { type: Number },
   dimensions: {
     length: { type: Number, required: true },
     width: { type: Number, required: true },
@@ -43,13 +44,13 @@ const variantSchema = new mongoose.Schema({
     unit: { type: String, default: 'oz' },
   },
   variantDetail: { type: variantDetailSchema, required: true },
-  variantSpecifications: [variantSpecificationSchema],
-  detailTitle: String,
-  detailSubtitle: String,
+  variantSpecifications: { type: [variantSpecificationSchema], default: [] },
+  detailTitle: { type: String },
+  detailSubtitle: { type: String },
   detailDescription: [
     {
-      description: String,
-      image: String,
+      description: { type: String },
+      image: { type: String },
     },
   ],
 });
@@ -62,21 +63,25 @@ const specificationSchema = new mongoose.Schema({
 
 const shippingSchema = new mongoose.Schema({
   country: { type: String, default: 'US', required: true },
-  region: String, // e.g., "California"
+  region: { type: String },
   service: { type: String, default: 'Standard', required: true },
   price: { type: Number, default: 0, required: true },
-  minHandlingTime: { type: Number, default: 1 }, // in days
-  maxHandlingTime: { type: Number, default: 3 }, // in days
+  minHandlingTime: { type: Number, default: 1 },
+  maxHandlingTime: { type: Number, default: 3 },
 });
 
 // ================== MAIN PRODUCT SCHEMA ================== //
 const productSchema = new mongoose.Schema(
   {
-    // Core Identifiers
+    sku: {
+      type: String,
+      default: () => `BOX-${uuidv4().split('-')[0].toUpperCase()}`,
+      unique: true,
+      index: true,
+    },
     identifierExists: { type: Boolean, default: true },
-    gtin: { type: String, required: true }, // Global Trade Item Number
-    mpn: { type: String, required: true }, // Manufacturer Part Number
-
+    gtin: { type: String, required: true },
+    mpn: { type: String, required: true },
     categories: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -99,12 +104,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       default: 'Packaging Boxes>Custom Printed Boxes',
     },
-
-    // Product Content
     title: { type: String, required: true },
-    image: { type: String, required: true }, // Main image (800x800+ recommended)
-    additionalImages: [String], // At least 2-3 extra images
-    description: { type: String, required: true, minlength: 150 }, // Detailed description
+    image: { type: String, required: true },
+    additionalImages: { type: [String], default: [] },
+    description: { type: String, required: true },
     pdfImage: { type: String },
     brand: { type: String, default: 'SirePrinting', required: true },
     condition: {
@@ -119,46 +122,29 @@ const productSchema = new mongoose.Schema(
       default: 'in stock',
       required: true,
     },
-
-    // Pricing
     price: { type: Number, required: true },
     priceCurrency: { type: String, default: 'USD', required: true },
-    salePrice: Number,
+    salePrice: { type: Number },
     salePriceEffectiveDate: {
-      start: Date,
-      end: Date,
+      start: { type: Date },
+      end: { type: Date },
     },
-
-    // Shipping
-    shipping: [shippingSchema],
+    shipping: { type: [shippingSchema], default: [] },
     shippingWeight: {
-      value: Number,
+      value: { type: Number },
       unit: { type: String, default: 'oz' },
     },
-
-    // Variants
-    variants: [variantSchema],
-
-    // Specifications
-    specifications: [specificationSchema],
-
-    // Reviews
+    variants: { type: [variantSchema], default: [] },
+    specifications: { type: [specificationSchema], default: [] },
     reviews: [
       {
-        name: String,
         rating: { type: Number, min: 1, max: 5 },
-        comment: String,
-        date: { type: Date, default: Date.now },
       },
     ],
     averageRating: { type: Number, default: 0 },
-
-    // SEO
-    seoTitle: String,
-    seoDescription: String,
-    seoKeyword: [String],
-
-    // Google Shopping Attributes
+    seoTitle: { type: String },
+    seoDescription: { type: String },
+    seoKeyword: { type: [String], default: [] },
     adult: { type: Boolean, default: false },
     isBundle: { type: Boolean, default: false },
     multipack: { type: Number, default: 1 },
@@ -168,11 +154,20 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Auto-generate SKU if not provided
+// ================== MIDDLEWARE FOR SKU ================== //
 productSchema.pre('save', function (next) {
   if (!this.sku) {
-    this.sku = `SKU-${uuidv4().split('-')[0].toUpperCase()}`;
+    this.sku = `BOX-${uuidv4().split('-')[0].toUpperCase()}`;
   }
+
+  if (Array.isArray(this.variants)) {
+    this.variants.forEach((variant) => {
+      if (!variant.sku) {
+        variant.set('sku', `SKU-${uuidv4().split('-')[0].toUpperCase()}`);
+      }
+    });
+  }
+
   next();
 });
 

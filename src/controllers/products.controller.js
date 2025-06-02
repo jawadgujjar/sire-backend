@@ -1,12 +1,20 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const productService = require('../services/products.service');
+const Product = require('../models/products.model');
 
 const createProduct = catchAsync(async (req, res) => {
   const product = await productService.createProduct(req.body);
   res.status(httpStatus.CREATED).send(product);
 });
-
+const getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find().populate('categories subcategories');
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
 const getProduct = catchAsync(async (req, res) => {
   const product = await productService.getProductById(req.params.productId);
   res.send(product);
@@ -34,6 +42,7 @@ const deleteProduct = catchAsync(async (req, res) => {
 
 module.exports = {
   createProduct,
+  getAllProducts,
   getProduct,
   getProductsByCategory,
   getProductsBySubCategory,
