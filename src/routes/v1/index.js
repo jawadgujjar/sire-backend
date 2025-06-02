@@ -7,6 +7,8 @@ const categoryRoute = require('./category.route');
 const SubCategoryRoute = require('./subcategory.route');
 const portfolioRoute = require('./portfolio.route');
 const productRoute = require('./products.route');
+const blogCategoryRoute = require('./blogcategory.route');
+const blogAuthorRoute = require('./blogauthor.route');
 const blogRoute = require('./blogs.route');
 const contactusRoute = require('./contactus.route');
 const aboutusRoute = require('./aboutus.route');
@@ -63,6 +65,14 @@ const defaultRoutes = [
   {
     path: '/blogs',
     route: blogRoute,
+  },
+  {
+    path: '/blogauthor',
+    route: blogAuthorRoute,
+  },
+  {
+    path: '/blogcategory',
+    route: blogCategoryRoute,
   },
   {
     path: '/contactus',

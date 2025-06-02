@@ -1,52 +1,39 @@
-// services/blog.service.js
-const httpStatus = require('http-status');
-const { Blog } = require('../models');
-const ApiError = require('../utils/ApiError');
+const Blog = require('../models/blogs.model');
 
-const createBlog = (blogData) => {
-  return Blog.create(blogData); // No need for await here
+const createBlog = async (data) => {
+  return Blog.create(data); // ✅ no unnecessary await
 };
 
-const getAllBlogs = () => {
-  return Blog.find(); // No need for await here
+const getAllBlogs = async () => {
+  return Blog.find().populate('blogAuthor').populate('blogCategory').sort({ createdAt: -1 });
 };
 
 const getBlogById = async (id) => {
-  const blog = await Blog.findById(id);
-  if (!blog) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Blog not found');
-  }
-  return blog;
+  return Blog.findById(id).populate('blogAuthor').populate('blogCategory');
 };
 
-const getBlogsByCategory = async (categoryId) => {
-  const blogs = await Blog.find({ category: categoryId }).populate('category');
-  if (!blogs.length) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'No blogs found for this category');
-  }
-  return blogs;
-};
-
-const updateBlog = async (id, updateData) => {
-  const blog = await Blog.findByIdAndUpdate(id, updateData, { new: true });
-  if (!blog) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Blog not found');
-  }
-  return blog;
+const updateBlog = async (id, data) => {
+  return Blog.findByIdAndUpdate(id, data, { new: true });
 };
 
 const deleteBlog = async (id) => {
-  const blog = await Blog.findByIdAndDelete(id);
-  if (!blog) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Blog not found');
-  }
+  return Blog.findByIdAndDelete(id);
+};
+
+const getByAuthorId = async (authorId) => {
+  return Blog.find({ blogAuthor: authorId }).populate('blogAuthor').populate('blogCategory').sort({ createdAt: -1 });
+};
+
+const getByCategoryId = async (categoryId) => {
+  return Blog.find({ blogCategory: categoryId }).populate('blogAuthor').populate('blogCategory').sort({ createdAt: -1 });
 };
 
 module.exports = {
   createBlog,
   getAllBlogs,
   getBlogById,
-  getBlogsByCategory,
   updateBlog,
   deleteBlog,
+  getByAuthorId,
+  getByCategoryId,
 };

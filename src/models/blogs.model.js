@@ -1,52 +1,51 @@
 const mongoose = require('mongoose');
 
-// Blog Detail Schema
-const blogDetailSchema = new mongoose.Schema(
+const tablePointSchema = new mongoose.Schema(
   {
-    title: {
-      type: String, // Title for each blog detail
-      required: true,
-    },
-    description: {
-      type: String, // Description for each blog detail
-      required: true,
-    },
-    image: {
-      type: String, // Image URL or file path for each blog detail
-      required: true,
-    },
+    title: { type: String, required: true },
+    points: [{ type: String }],
   },
-  { timestamps: true }
+  { _id: false }
 );
 
-// Blog Schema
+const detailSchema = new mongoose.Schema(
+  {
+    detailTitle: { type: String, default: '' },
+    detailDescription: { type: String, default: '' },
+    images: [{ type: String }],
+    table: [tablePointSchema],
+  },
+  { _id: false }
+);
+
 const blogSchema = new mongoose.Schema(
   {
+    blogAuthor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'BlogAuthor',
+      required: true,
+    },
+    blogCategory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'BlogCategory',
+      required: true,
+    },
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     image: {
-      type: String, // Image URL or file path
+      type: String,
       required: true,
     },
-    description: {
-      type: String, // Short description for the blog
-      required: true,
+    details: [detailSchema],
+    hasCarousel: {
+      type: Boolean,
+      default: false,
     },
-    category: {
-      type: mongoose.Schema.Types.ObjectId, // Reference to Category model
-      ref: 'Category', // Referencing the 'Category' model
-      required: true, // Ensuring each blog has a category
-    },
-    blogDetail: [
-      blogDetailSchema, // Embedded blog detail schema as an array
-    ],
   },
   { timestamps: true }
 );
 
-// Blog Model
-const Blog = mongoose.model('Blog', blogSchema);
-
-module.exports = Blog;
+module.exports = mongoose.model('Blog', blogSchema);
