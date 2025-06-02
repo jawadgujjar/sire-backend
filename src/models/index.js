@@ -18,3 +18,4 @@ module.exports.Testimonial = require('./testimonial.model');
 module.exports.SearchTracker = require('./searchtracker.model');
 module.exports.CarouselImage = require('./carouselimage.model');
 module.exports.CustomerFeedback = require('./customerfeedback.model');
+module.exports.Faq = require('./faq.model');

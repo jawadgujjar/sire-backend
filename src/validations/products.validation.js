@@ -3,6 +3,7 @@ const { objectId } = require('./custom.validation');
 
 const createProduct = {
   body: Joi.object().keys({
+    sku: Joi.string().optional(),
     gtin: Joi.string().required(),
     mpn: Joi.string().required(),
     categories: Joi.array().items(Joi.string().custom(objectId)).required(),
@@ -13,7 +14,7 @@ const createProduct = {
     title: Joi.string().required(),
     image: Joi.string().required(),
     additionalImages: Joi.array().items(Joi.string()),
-    description: Joi.string().required().min(150),
+    description: Joi.string().required(),
     brand: Joi.string(),
     condition: Joi.string().valid('new', 'used', 'refurbished'),
     availability: Joi.string().valid('in stock', 'out of stock', 'preorder'),
@@ -38,8 +39,60 @@ const createProduct = {
       value: Joi.number(),
       unit: Joi.string(),
     }),
-    variants: Joi.array().items(Joi.any()), // skip deep variant validation for brevity
-    specifications: Joi.array().items(Joi.any()),
+    variants: Joi.array().items(
+      Joi.object({
+        sku: Joi.string().optional(),
+        variantTitle: Joi.string().required(),
+        variantDescription: Joi.string().required(),
+        price: Joi.number().required(),
+        salePrice: Joi.number(),
+        dimensions: Joi.object({
+          length: Joi.number().required(),
+          width: Joi.number().required(),
+          height: Joi.number().required(),
+          unit: Joi.string(),
+        }),
+        weight: Joi.object({
+          value: Joi.number().required(),
+          unit: Joi.string(),
+        }),
+        variantDetail: Joi.object({
+          material: Joi.array().items(Joi.string()).required(),
+          colormodel: Joi.array().items(Joi.string()).required(),
+          finishing: Joi.array().items(Joi.string()).required(),
+          addon: Joi.array().items(Joi.string()),
+          turnaround: Joi.array().items(Joi.string()).required(),
+          faqs: Joi.array().items(
+            Joi.object({
+              question: Joi.string(),
+              answer: Joi.string(),
+            })
+          ),
+        }).required(),
+        variantSpecifications: Joi.array().items(
+          Joi.object({
+            image: Joi.string().required(),
+            title: Joi.string().required(),
+            description: Joi.string().required(),
+          })
+        ),
+        detailTitle: Joi.string(),
+        detailSubtitle: Joi.string(),
+        detailDescription: Joi.array().items(
+          Joi.object({
+            description: Joi.string(),
+            image: Joi.string(),
+          })
+        ),
+      })
+    ),
+    specifications: Joi.array().items(
+      Joi.object({
+        image: Joi.string().required(),
+        title: Joi.string().required(),
+        description: Joi.string().required(),
+      })
+    ),
     seoTitle: Joi.string(),
     seoDescription: Joi.string(),
     seoKeyword: Joi.array().items(Joi.string()),
@@ -48,6 +101,13 @@ const createProduct = {
     isBundle: Joi.boolean(),
     adult: Joi.boolean(),
     minimumOrderQuantity: Joi.number(),
+    identifierExists: Joi.boolean(),
+    averageRating: Joi.number(),
+    reviews: Joi.array().items(
+      Joi.object({
+        rating: Joi.number().required(),
+      })
+    ),
   }),
 };
 
