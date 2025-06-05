@@ -2,29 +2,34 @@ const Joi = require('joi');
 
 const createPortfolio = {
   body: Joi.object().keys({
-    category: Joi.string().required(),
-    image: Joi.string().uri().required(),
-    productName: Joi.string().required(),
-    seoTitle: Joi.string().optional(),
-    seoKeyword: Joi.string().optional(), // Make this field allowed
-    seoDescription: Joi.string().optional(),
+    productId: Joi.string()
+      .regex(/^[0-9a-fA-F]{24}$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'Invalid productId format. Must be a valid MongoDB ObjectId.',
+      }),
   }),
 };
 
 const updatePortfolio = {
   body: Joi.object().keys({
-    category: Joi.string().optional(),
-    image: Joi.string().uri().optional(),
-    productName: Joi.string().optional(),
-    seoTitle: Joi.string().optional(),
-    seoKeyword: Joi.string().optional(), // Make this field allowed
-    seoDescription: Joi.string().optional(),
+    productId: Joi.string()
+      .regex(/^[0-9a-fA-F]{24}$/)
+      .optional()
+      .messages({
+        'string.pattern.base': 'Invalid productId format. Must be a valid MongoDB ObjectId.',
+      }),
   }),
 };
 
 const getPortfolioById = {
   params: Joi.object().keys({
-    id: Joi.string().required(),
+    id: Joi.string()
+      .regex(/^[0-9a-fA-F]{24}$/)
+      .required()
+      .messages({
+        'string.pattern.base': 'Invalid id format. Must be a valid MongoDB ObjectId.',
+      }),
   }),
 };
 
