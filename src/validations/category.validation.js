@@ -1,0 +1,35 @@
+// validations/categoryValidation.js
+const Joi = require('joi');
+
+const detailSchema = Joi.object({
+  detailDescription: Joi.string().optional().max(1000),
+  image: Joi.string().optional().uri(),
+});
+
+const createCategory = Joi.object({
+  title: Joi.string().required().max(100),
+  image: Joi.string().required().uri(),
+  pageImage: Joi.string().optional().uri(),
+  description: Joi.string().optional().max(1000),
+  detailTitle: Joi.string().optional().max(200),
+  detailSubtitle: Joi.string().optional().max(200),
+  seoTitle: Joi.string().optional().max(150),
+  seoKeyword: Joi.string().optional().max(200),
+  seoDescription: Joi.string().optional().max(500),
+  details: Joi.array().items(detailSchema).optional(),
+});
+
+const updateCategory = Joi.object({
+  title: Joi.string().optional().max(100),
+  image: Joi.string().optional().uri(),
+  pageImage: Joi.string().optional().uri(),
+  description: Joi.string().optional().max(1000),
+  detailTitle: Joi.string().optional().max(200),
+  detailSubtitle: Joi.string().optional().max(200),
+  seoTitle: Joi.string().optional().max(150),
+  seoKeyword: Joi.string().optional().max(200),
+  seoDescription: Joi.string().optional().max(500),
+  details: Joi.array().items(detailSchema).optional(),
+});
+
+module.exports = { createCategory, updateCategory };
