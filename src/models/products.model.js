@@ -17,7 +17,7 @@ const variantDetailSchema = new mongoose.Schema({
 });
 
 const variantSpecificationSchema = new mongoose.Schema({
-  image: { type: String, required: true },
+  image: { type: String },
   title: { type: String, required: true },
   description: { type: String, required: true },
 });
@@ -56,7 +56,7 @@ const variantSchema = new mongoose.Schema({
 });
 
 const specificationSchema = new mongoose.Schema({
-  image: { type: String, required: true },
+  image: { type: String },
   title: { type: String, required: true },
   description: { type: String, required: true },
 });
@@ -105,7 +105,7 @@ const productSchema = new mongoose.Schema(
       default: 'Packaging Boxes>Custom Printed Boxes',
     },
     title: { type: String, required: true },
-    image: { type: String, required: true },
+    image: { type: String },
     additionalImages: { type: [String], default: [] },
     description: { type: String, required: true },
     pdfImage: { type: String },

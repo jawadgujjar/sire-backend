@@ -8,7 +8,7 @@ const detailSchema = Joi.object({
 
 const createCategory = Joi.object({
   title: Joi.string().required().max(100),
-  image: Joi.string().required().uri(),
+  image: Joi.string().uri(),
   pageImage: Joi.string().optional().uri(),
   description: Joi.string().optional().max(1000),
   detailTitle: Joi.string().optional().max(200),
