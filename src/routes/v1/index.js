@@ -20,6 +20,8 @@ const testimonialRoute = require('./testimonial.route');
 const carouselimageRoute = require('./carouselimage.route');
 const searchtrackerRoute = require('./searchtracker.route');
 const customerfeedbackRoute = require('./customerfeedback.route');
+const refundPolicyRoute = require('./refundpolicy.route');
+const navItemsRoute = require('./navitems.route');
 const faqRoute = require('./faq.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
@@ -114,6 +116,14 @@ const defaultRoutes = [
   {
     path: '/faq',
     route: faqRoute,
+  },
+  {
+    path: '/refundpolicy',
+    route: refundPolicyRoute,
+  },
+  {
+    path: '/navitems',
+    route: navItemsRoute,
   },
 ];
 

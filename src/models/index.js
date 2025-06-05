@@ -19,3 +19,5 @@ module.exports.SearchTracker = require('./searchtracker.model');
 module.exports.CarouselImage = require('./carouselimage.model');
 module.exports.CustomerFeedback = require('./customerfeedback.model');
 module.exports.Faq = require('./faq.model');
+module.exports.RefundPolicy = require('./refundpolicy.model');
+module.exports.NavItem = require('./navitems.model');
