@@ -144,8 +144,6 @@ const productSchema = new mongoose.Schema(
     averageRating: { type: Number, default: 0 },
     seoTitle: { type: String },
     seoDescription: { type: String },
-    seoKeyword: { type: [String], default: [] },
-    adult: { type: Boolean, default: false },
     isBundle: { type: Boolean, default: false },
     multipack: { type: Number, default: 1 },
     customizable: { type: Boolean, default: true },
