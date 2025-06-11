@@ -12,7 +12,7 @@ const createProduct = {
     productType: Joi.string(),
     pdfImage: Joi.string(),
     title: Joi.string().required(),
-    image: Joi.string().required(),
+    image: Joi.string(),
     additionalImages: Joi.array().items(Joi.string()),
     description: Joi.string().required(),
     brand: Joi.string(),
@@ -71,7 +71,7 @@ const createProduct = {
         }).required(),
         variantSpecifications: Joi.array().items(
           Joi.object({
-            image: Joi.string().required(),
+            image: Joi.string(),
             title: Joi.string().required(),
             description: Joi.string().required(),
           })
@@ -88,7 +88,7 @@ const createProduct = {
     ),
     specifications: Joi.array().items(
       Joi.object({
-        image: Joi.string().required(),
+        image: Joi.string(),
         title: Joi.string().required(),
         description: Joi.string().required(),
       })
