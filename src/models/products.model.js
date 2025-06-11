@@ -123,7 +123,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     price: { type: Number, required: true },
-    priceCurrency: { type: String, default: 'USD', required: true },
+    priceCurrency: { type: String, default: 'GBP', required: true },
     salePrice: { type: Number },
     salePriceEffectiveDate: {
       start: { type: Date },
