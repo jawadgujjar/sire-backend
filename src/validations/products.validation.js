@@ -35,10 +35,7 @@ const createProduct = {
         maxHandlingTime: Joi.number(),
       })
     ),
-    shippingWeight: Joi.object({
-      value: Joi.number(),
-      unit: Joi.string(),
-    }),
+
     variants: Joi.array().items(
       Joi.object({
         sku: Joi.string().optional(),
@@ -52,10 +49,7 @@ const createProduct = {
           height: Joi.number().required(),
           unit: Joi.string(),
         }),
-        weight: Joi.object({
-          value: Joi.number().required(),
-          unit: Joi.string(),
-        }),
+
         variantDetail: Joi.object({
           material: Joi.array().items(Joi.string()).required(),
           colormodel: Joi.array().items(Joi.string()).required(),
@@ -99,7 +93,6 @@ const createProduct = {
     customizable: Joi.boolean(),
     multipack: Joi.number(),
     isBundle: Joi.boolean(),
-    adult: Joi.boolean(),
     minimumOrderQuantity: Joi.number(),
     identifierExists: Joi.boolean(),
     averageRating: Joi.number(),

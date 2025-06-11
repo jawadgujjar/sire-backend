@@ -39,10 +39,7 @@ const variantSchema = new mongoose.Schema({
     height: { type: Number, required: true },
     unit: { type: String, default: 'in' },
   },
-  weight: {
-    value: { type: Number, required: true },
-    unit: { type: String, default: 'oz' },
-  },
+
   variantDetail: { type: variantDetailSchema, required: true },
   variantSpecifications: { type: [variantSpecificationSchema], default: [] },
   detailTitle: { type: String },
@@ -130,10 +127,7 @@ const productSchema = new mongoose.Schema(
       end: { type: Date },
     },
     shipping: { type: [shippingSchema], default: [] },
-    shippingWeight: {
-      value: { type: Number },
-      unit: { type: String, default: 'oz' },
-    },
+
     variants: { type: [variantSchema], default: [] },
     specifications: { type: [specificationSchema], default: [] },
     reviews: [
