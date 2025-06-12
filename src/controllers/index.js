@@ -21,3 +21,4 @@ module.exports.carouselimageController = require('./carouselimage.controller');
 module.exports.customerfeedbackController = require('./customerfeedback.controller');
 module.exports.faqController = require('./faq.controller');
 module.exports.refundPolicyController = require('./refundpolicy.controller');
+module.exports.instantQuoteController = require('./instantquote.controller');

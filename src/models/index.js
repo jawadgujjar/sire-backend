@@ -21,3 +21,4 @@ module.exports.CustomerFeedback = require('./customerfeedback.model');
 module.exports.Faq = require('./faq.model');
 module.exports.RefundPolicy = require('./refundpolicy.model');
 module.exports.NavItem = require('./navitems.model');
+module.exports.InstantQuote = require('./instantquote.model');

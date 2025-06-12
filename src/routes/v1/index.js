@@ -23,6 +23,7 @@ const customerfeedbackRoute = require('./customerfeedback.route');
 const refundPolicyRoute = require('./refundpolicy.route');
 const navItemsRoute = require('./navitems.route');
 const faqRoute = require('./faq.route');
+const instantQuoteRoute = require('./instantquote.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -124,6 +125,10 @@ const defaultRoutes = [
   {
     path: '/navitems',
     route: navItemsRoute,
+  },
+  {
+    path: '/instantquote',
+    route: instantQuoteRoute,
   },
 ];
 
