@@ -120,14 +120,14 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     price: { type: Number, required: true },
-    priceCurrency: { type: String, default: 'USD', required: true },
+    priceCurrency: { type: String, default: 'GBP', required: true },
     salePrice: { type: Number },
     salePriceEffectiveDate: {
       start: { type: Date },
       end: { type: Date },
     },
     shipping: { type: [shippingSchema], default: [] },
-    
+
     variants: { type: [variantSchema], default: [] },
     specifications: { type: [specificationSchema], default: [] },
     reviews: [

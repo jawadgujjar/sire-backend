@@ -35,7 +35,7 @@ const createProduct = {
         maxHandlingTime: Joi.number(),
       })
     ),
-   
+
     variants: Joi.array().items(
       Joi.object({
         sku: Joi.string().optional(),
@@ -49,7 +49,7 @@ const createProduct = {
           height: Joi.number().required(),
           unit: Joi.string(),
         }),
-       
+
         variantDetail: Joi.object({
           material: Joi.array().items(Joi.string()).required(),
           colormodel: Joi.array().items(Joi.string()).required(),
