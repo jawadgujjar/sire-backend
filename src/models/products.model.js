@@ -138,7 +138,6 @@ const productSchema = new mongoose.Schema(
     averageRating: { type: Number, default: 0 },
     seoTitle: { type: String },
     seoDescription: { type: String },
-    schema: { type: String },
     isBundle: { type: Boolean, default: false },
     multipack: { type: Number, default: 1 },
     customizable: { type: Boolean, default: true },
