@@ -8,6 +8,8 @@ const policySchema = new mongoose.Schema({
 const refundPolicySchema = new mongoose.Schema(
   {
     policies: [policySchema],
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true }
 );

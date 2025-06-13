@@ -44,6 +44,8 @@ const blogSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true }
 );

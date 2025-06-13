@@ -7,15 +7,14 @@ const detailSchema = Joi.object({
 });
 
 const createCategory = Joi.object({
-  title: Joi.string().required().max(100),
+  title: Joi.string().required(),
   image: Joi.string().uri(),
   pageImage: Joi.string().optional().uri(),
-  description: Joi.string().optional().max(1000),
-  detailTitle: Joi.string().optional().max(200),
-  detailSubtitle: Joi.string().optional().max(200),
-  seoTitle: Joi.string().optional().max(150),
-  seoKeyword: Joi.string().optional().max(200),
-  seoDescription: Joi.string().optional().max(500),
+  description: Joi.string().optional(),
+  detailTitle: Joi.string().optional(),
+  detailSubtitle: Joi.string().optional(),
+  seoTitle: Joi.string().optional(),
+  seoDescription: Joi.string().optional(),
   details: Joi.array().items(detailSchema).optional(),
 });
 

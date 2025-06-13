@@ -62,6 +62,8 @@ const getQuoteSchema = new mongoose.Schema({
     type: String, // Any additional message from the user
     required: false,
   },
+  seoTitle: { type: String },
+  seoDescription: { type: String },
 });
 
 // GetQuote Model

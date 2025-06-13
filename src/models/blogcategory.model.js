@@ -9,6 +9,8 @@ const blogCategorySchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true }
 );

@@ -5,6 +5,8 @@ const createPrivacy = {
   body: Joi.object().keys({
     title: Joi.array().items(Joi.string().max(255)).required(), // Array of strings with max length
     description: Joi.array().items(Joi.string()).required(), // Array of strings
+    seoTitle: Joi.string(),
+    seoDescription: Joi.string(),
   }),
 };
 

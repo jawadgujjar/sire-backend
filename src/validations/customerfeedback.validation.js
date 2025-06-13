@@ -13,6 +13,8 @@ const createCustomerFeedback = {
         })
       )
       .optional(), // FAQ field is optional, but if provided, each FAQ must follow the structure
+    seoTitle: Joi.string(),
+    seoDescription: Joi.string(),
   }),
 };
 

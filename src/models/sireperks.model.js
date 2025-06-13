@@ -11,6 +11,8 @@ const perkSchema = new mongoose.Schema(
       type: String, // Can store the file path or URL for the image
       required: true,
     },
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true }
 );

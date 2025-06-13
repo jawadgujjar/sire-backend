@@ -8,7 +8,7 @@ const instantQuoteSchema = new mongoose.Schema(
     unit: String,
     color: String,
     quantity: Number,
-    image: String, // Store as URL or base64 string
+    image: String,
     name: String,
     email: String,
     phonenumber: String,

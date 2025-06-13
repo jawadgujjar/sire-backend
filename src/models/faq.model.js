@@ -7,6 +7,8 @@ const faqItemSchema = new mongoose.Schema({
 
 const faqSchema = new mongoose.Schema({
   faqs: [faqItemSchema],
+  seoTitle: { type: String },
+  seoDescription: { type: String },
 });
 
 module.exports = mongoose.model('Faq', faqSchema);

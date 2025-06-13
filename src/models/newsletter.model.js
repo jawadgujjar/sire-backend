@@ -10,6 +10,8 @@ const newsletterSchema = new mongoose.Schema(
       lowercase: true, // Convert email to lowercase before saving
       match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'], // Basic email validation
     },
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt fields
 );

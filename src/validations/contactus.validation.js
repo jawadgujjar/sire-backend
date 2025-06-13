@@ -9,6 +9,8 @@ const createContact = {
       .pattern(/^[0-9]{10,15}$/)
       .message('Phone number must be between 10 to 15 digits'),
     message: Joi.string().required().trim(),
+    seoTitle: Joi.string(),
+    seoDescription: Joi.string(),
   }),
 };
 

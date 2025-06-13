@@ -23,6 +23,8 @@ const testimonialSchema = new mongoose.Schema(
       type: String, // URL for the image
       required: true,
     },
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt fields
 );
