@@ -89,7 +89,7 @@ const createProduct = {
     ),
     seoTitle: Joi.string(),
     seoDescription: Joi.string(),
-    schema: Joi.string(),
+    seoKeyword: Joi.array().items(Joi.string()),
     customizable: Joi.boolean(),
     multipack: Joi.number(),
     isBundle: Joi.boolean(),
