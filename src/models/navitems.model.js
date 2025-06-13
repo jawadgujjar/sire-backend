@@ -16,6 +16,8 @@ const navItemSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true }
 );

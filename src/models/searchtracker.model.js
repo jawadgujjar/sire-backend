@@ -11,6 +11,8 @@ const searchTrackerSchema = new mongoose.Schema(
       type: String, // Optional: User ka IP address track karne ke liye
       required: false,
     },
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true } // Automatically createdAt & updatedAt add karega
 );

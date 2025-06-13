@@ -8,6 +8,8 @@ const createPortfolio = {
       .messages({
         'string.pattern.base': 'Invalid productId format. Must be a valid MongoDB ObjectId.',
       }),
+    seoTitle: Joi.string(),
+    seoDescription: Joi.string(),
   }),
 };
 

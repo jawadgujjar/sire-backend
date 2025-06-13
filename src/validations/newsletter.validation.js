@@ -6,6 +6,8 @@ const createNewsletter = {
       'string.email': 'Please enter a valid email address',
       'any.required': 'Email is required',
     }),
+    seoTitle: Joi.string(),
+    seoDescription: Joi.string(),
   }),
 };
 

@@ -11,6 +11,8 @@ const aboutUsSchema = new mongoose.Schema(
       type: [String], // Array of descriptions
       required: true,
     },
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true } // Automatically adds createdAt and updatedAt fields
 );

@@ -29,10 +29,6 @@ const subCategorySchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    seoKeyword: {
-      type: String,
-      required: false,
-    },
     seoDescription: {
       type: String,
       required: false,

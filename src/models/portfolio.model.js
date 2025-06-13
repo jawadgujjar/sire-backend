@@ -9,6 +9,8 @@ const portfolioSchema = new mongoose.Schema(
       ref: 'Product', // This must match the name used in your Product model export
       required: true,
     },
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true }
 );

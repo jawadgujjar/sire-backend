@@ -15,6 +15,8 @@ const blogAuthorSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    seoTitle: { type: String },
+    seoDescription: { type: String },
   },
   { timestamps: true }
 );
