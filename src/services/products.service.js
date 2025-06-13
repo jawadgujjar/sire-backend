@@ -5,7 +5,16 @@ const createProduct = async (data) => {
 };
 
 const getProductById = async (id) => {
-  return Product.findById(id).populate('categories subcategories');
+  const product = await Product.findById(id).populate('categories subcategories').lean(); // Convert to plain JS object
+
+  if (!product) {
+    throw new Error('Product not found');
+  }
+
+  // Ensure variants array exists (even if empty)
+  product.variants = product.variants || [];
+
+  return product;
 };
 
 const getProductsByCategoryId = async (categoryId) => {
