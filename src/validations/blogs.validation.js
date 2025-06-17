@@ -21,6 +21,8 @@ const createBlogSchema = Joi.object({
   image: Joi.string().required(),
   details: Joi.array().items(detailSchema).optional(),
   hasCarousel: Joi.boolean().optional(),
+  seoTitle: Joi.string(),
+  seoDescription: Joi.string(),
 });
 
 const updateBlogSchema = Joi.object({

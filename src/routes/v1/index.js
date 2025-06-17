@@ -25,6 +25,7 @@ const navItemsRoute = require('./navitems.route');
 const faqRoute = require('./faq.route');
 const dielineForm = require('./dielineform.route');
 const instantQuoteRoute = require('./instantquote.route');
+const instagramRoute = require('./instagram.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -134,6 +135,10 @@ const defaultRoutes = [
   {
     path: '/dielineform',
     route: dielineForm,
+  },
+  {
+    path: '/instagram',
+    route: instagramRoute,
   },
 ];
 

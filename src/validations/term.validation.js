@@ -13,6 +13,8 @@ const updateTerm = {
   body: Joi.object().keys({
     title: Joi.array().items(Joi.string().required()).optional(),
     description: Joi.array().items(Joi.string().required()).optional(),
+    seoTitle: Joi.string(),
+    seoDescription: Joi.string(),
   }),
 };
 
