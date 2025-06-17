@@ -23,3 +23,4 @@ module.exports.faqController = require('./faq.controller');
 module.exports.refundPolicyController = require('./refundpolicy.controller');
 module.exports.instantQuoteController = require('./instantquote.controller');
 module.exports.dielineFormController = require('./dielineform.controller');
+module.exports.instagramController = require('./instagram.controller');

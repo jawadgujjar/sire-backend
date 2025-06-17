@@ -44,6 +44,8 @@ const variantSchema = new mongoose.Schema({
   variantSpecifications: { type: [variantSpecificationSchema], default: [] },
   detailTitle: { type: String },
   detailSubtitle: { type: String },
+  seoTitle: { type: String },
+  seoDescription: { type: String },
   detailDescription: [
     {
       description: { type: String },
@@ -136,6 +138,7 @@ const productSchema = new mongoose.Schema(
       },
     ],
     averageRating: { type: Number, default: 0 },
+    schemaName: { type: String, required: false },
     seoTitle: { type: String },
     seoDescription: { type: String },
     isBundle: { type: Boolean, default: false },

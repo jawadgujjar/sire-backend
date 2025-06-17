@@ -42,6 +42,8 @@ const createProduct = {
         variantTitle: Joi.string().required(),
         variantDescription: Joi.string().required(),
         price: Joi.number().required(),
+        seoTitle: Joi.string(),
+        seoDescription: Joi.string(),
         salePrice: Joi.number(),
         dimensions: Joi.object({
           length: Joi.number().required(),
@@ -88,6 +90,7 @@ const createProduct = {
       })
     ),
     seoTitle: Joi.string(),
+    schemaName: Joi.string(),
     seoDescription: Joi.string(),
     seoKeyword: Joi.array().items(Joi.string()),
     customizable: Joi.boolean(),

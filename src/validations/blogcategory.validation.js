@@ -8,6 +8,8 @@ const createBlogCategorySchema = Joi.object({
 
 const updateBlogCategorySchema = Joi.object({
   name: Joi.string().trim().required(),
+  seoTitle: Joi.string(),
+  seoDescription: Joi.string(),
 });
 
 module.exports = {
