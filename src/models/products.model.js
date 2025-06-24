@@ -39,7 +39,6 @@ const variantSchema = new mongoose.Schema({
     height: { type: Number, required: true },
     unit: { type: String, default: 'in' },
   },
-
   variantDetail: { type: variantDetailSchema, required: true },
   variantSpecifications: { type: [variantSpecificationSchema], default: [] },
   detailTitle: { type: String },
@@ -69,6 +68,14 @@ const shippingSchema = new mongoose.Schema({
   maxHandlingTime: { type: Number, default: 3 },
 });
 
+const reviewSchema = new mongoose.Schema({
+  rating: { type: Number, min: 1, max: 5 },
+  comment: { type: String },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  userName: { type: String },
+  createdAt: { type: Date, default: Date.now },
+});
+
 // ================== MAIN PRODUCT SCHEMA ================== //
 const productSchema = new mongoose.Schema(
   {
@@ -78,6 +85,7 @@ const productSchema = new mongoose.Schema(
       unique: true,
       index: true,
     },
+    slug: { type: String, unique: true },
     identifierExists: { type: Boolean, default: true },
     gtin: { type: String, required: true },
     mpn: { type: String, required: true },
@@ -130,13 +138,27 @@ const productSchema = new mongoose.Schema(
     },
     shipping: { type: [shippingSchema], default: [] },
 
-    variants: { type: [variantSchema], default: [] },
-    specifications: { type: [specificationSchema], default: [] },
-    reviews: [
+    // Variant-level fields now at product level
+    variantDetail: { type: variantDetailSchema },
+    variantSpecifications: { type: [variantSpecificationSchema], default: [] },
+    detailTitle: { type: String },
+    detailSubtitle: { type: String },
+    detailDescription: [
       {
-        rating: { type: Number, min: 1, max: 5 },
+        description: { type: String },
+        image: { type: String },
       },
     ],
+    dimensions: {
+      length: { type: Number },
+      width: { type: Number },
+      height: { type: Number },
+      unit: { type: String, default: 'in' },
+    },
+
+    variants: { type: [variantSchema], default: [] },
+    specifications: { type: [specificationSchema], default: [] },
+    reviews: { type: [reviewSchema], default: [] },
     averageRating: { type: Number, default: 0 },
     schemaName: { type: String, required: false },
     seoTitle: { type: String },
@@ -149,18 +171,28 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ================== MIDDLEWARE FOR SKU ================== //
+// ================== MIDDLEWARE ================== //
 productSchema.pre('save', function (next) {
+  // Generate SKU if not exists
   if (!this.sku) {
     this.sku = `BOX-${uuidv4().split('-')[0].toUpperCase()}`;
   }
 
+  // Generate SKUs for variants if not exists
   if (Array.isArray(this.variants)) {
     this.variants.forEach((variant) => {
       if (!variant.sku) {
         variant.set('sku', `SKU-${uuidv4().split('-')[0].toUpperCase()}`);
       }
     });
+  }
+
+  // Calculate average rating
+  if (this.reviews && this.reviews.length > 0) {
+    const total = this.reviews.reduce((sum, review) => sum + review.rating, 0);
+    this.averageRating = total / this.reviews.length;
+  } else {
+    this.averageRating = 0;
   }
 
   next();

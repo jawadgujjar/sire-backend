@@ -9,7 +9,7 @@ const router = express.Router();
 router
   .route('/')
   .post(validate(subCategoryValidation.createSubCategory), subCategoryController.createSubCategory) // Create
-  .get(subCategoryController.getAllSubCategories); // Get all
+  .get(subCategoryController.getAllSubCategories);
 
 // GET - Get subcategory by ID, PATCH (update), DELETE
 router
