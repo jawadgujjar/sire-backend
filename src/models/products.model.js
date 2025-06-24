@@ -25,6 +25,7 @@ const variantSpecificationSchema = new mongoose.Schema({
 const variantSchema = new mongoose.Schema({
   variantTitle: { type: String, required: true },
   variantDescription: { type: String, required: true },
+  slug: { type: String, unique: true },
   sku: {
     type: String,
     default: () => `SKU-${uuidv4().split('-')[0].toUpperCase()}`,

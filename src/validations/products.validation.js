@@ -5,12 +5,13 @@ const createProduct = {
   body: Joi.object().keys({
     sku: Joi.string().optional(), // Auto-generated if not provided
     slug: Joi.string()
-      .regex(/^[a-z0-9-]+$/)
+      .regex(/^[a-z0-9/-]+$/)
       .required()
       .messages({
-        'string.pattern.base': 'Slug must be lowercase, alphanumeric, and hyphenated (e.g., custom-box-123)',
+        'string.pattern.base':
+          'Slug must be lowercase, alphanumeric, and can include hyphens and slashes (e.g., boxes/custom-box/luxury-matte)',
         'any.required': 'Slug is required',
-      }), // Required since no auto-generation
+      }),
     identifierExists: Joi.boolean().default(true),
     gtin: Joi.string().required(),
     mpn: Joi.string().required(),
@@ -91,6 +92,14 @@ const createProduct = {
       .items(
         Joi.object({
           sku: Joi.string().optional(), // Auto-generated if not provided
+          slug: Joi.string()
+            .regex(/^[a-z0-9/-]+$/)
+            .required()
+            .messages({
+              'string.pattern.base':
+                'Slug must be lowercase, alphanumeric, and can include hyphens and slashes (e.g., boxes/custom-box/luxury-matte)',
+              'any.required': 'Slug is required',
+            }),
           variantTitle: Joi.string().required(),
           variantDescription: Joi.string().required(),
           price: Joi.number().required(),
@@ -198,10 +207,12 @@ const updateProduct = {
     .keys({
       sku: Joi.string().optional(),
       slug: Joi.string()
-        .regex(/^[a-z0-9-]+$/)
-        .optional()
+        .regex(/^[a-z0-9/-]+$/)
+        .required()
         .messages({
-          'string.pattern.base': 'Slug must be lowercase, alphanumeric, and hyphenated (e.g., custom-box-123)',
+          'string.pattern.base':
+            'Slug must be lowercase, alphanumeric, and can include hyphens and slashes (e.g., boxes/custom-box/luxury-matte)',
+          'any.required': 'Slug is required',
         }),
       identifierExists: Joi.boolean().optional(),
       gtin: Joi.string().optional(),
@@ -281,6 +292,14 @@ const updateProduct = {
         .items(
           Joi.object({
             sku: Joi.string().optional(),
+            slug: Joi.string()
+              .regex(/^[a-z0-9/-]+$/)
+              .required()
+              .messages({
+                'string.pattern.base':
+                  'Slug must be lowercase, alphanumeric, and can include hyphens and slashes (e.g., boxes/custom-box/luxury-matte)',
+                'any.required': 'Slug is required',
+              }),
             variantTitle: Joi.string().optional(),
             variantDescription: Joi.string().optional(),
             price: Joi.number().optional(),
