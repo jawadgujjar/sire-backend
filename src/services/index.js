@@ -20,4 +20,3 @@ module.exports.testimonialService = require('./testimonial.service');
 module.exports.searchtrackerService = require('./searchtracker.service');
 module.exports.carouselimageService = require('./carouselimage.service');
 module.exports.customerfeedbackService = require('./customerfeedback.service');
-module.exports.instagramService = require('./instagram.service');
