@@ -1,4 +1,3 @@
-// validations/categoryValidation.js
 const Joi = require('joi');
 
 const detailSchema = Joi.object({
@@ -8,6 +7,12 @@ const detailSchema = Joi.object({
 
 const createCategory = Joi.object({
   title: Joi.string().required(),
+  slug: Joi.string()
+    .regex(/^[a-z0-9/-]+$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Slug must be lowercase, alphanumeric, and can include hyphens or slashes.',
+    }),
   image: Joi.string().uri(),
   pageImage: Joi.string().optional().uri(),
   description: Joi.string().optional(),
@@ -20,6 +25,12 @@ const createCategory = Joi.object({
 
 const updateCategory = Joi.object({
   title: Joi.string().optional().max(100),
+  slug: Joi.string()
+    .regex(/^[a-z0-9/-]+$/)
+    .optional()
+    .messages({
+      'string.pattern.base': 'Slug must be lowercase, alphanumeric, and can include hyphens or slashes.',
+    }),
   image: Joi.string().optional().uri(),
   pageImage: Joi.string().optional().uri(),
   description: Joi.string().optional().max(1000),

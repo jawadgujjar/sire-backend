@@ -6,6 +6,13 @@ const subCategorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
     image: {
       type: String,
     },

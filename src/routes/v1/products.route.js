@@ -24,4 +24,7 @@ router
   .route('/subcategory/:subCategoryId')
   .get(validate(productValidation.getBySubCategoryId), productController.getProductsBySubCategory);
 
+router.route('/:categorySlug/:subCategorySlug/:productSlug').get(productController.getProductBySlug);
+
+router.route('/:categorySlug/:subCategorySlug/:productSlug-:variantSku').get(productController.getProductByVariantSku);
 module.exports = router;

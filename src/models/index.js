@@ -24,3 +24,4 @@ module.exports.NavItem = require('./navitems.model');
 module.exports.InstantQuote = require('./instantquote.model');
 module.exports.DielineForm = require('./dielineform.model');
 module.exports.ApprovedDesign = require('./approveddesign.model');
+module.exports.Order = require('./order.model');

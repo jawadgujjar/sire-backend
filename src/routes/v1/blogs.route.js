@@ -1,16 +1,27 @@
 const express = require('express');
-
-const router = express.Router();
+const validate = require('../../middlewares/validate');
+const blogValidation = require('../../validations/blogs.validation');
 const blogController = require('../../controllers/blogs.controller');
 
-router.post('/', blogController.createBlog);
-router.get('/', blogController.getAllBlogs);
-router.get('/:id', blogController.getBlogById);
-router.put('/:id', blogController.updateBlog);
-router.delete('/:id', blogController.deleteBlog);
+const router = express.Router();
 
-// Extra routes
-router.get('/byauthor/:authorId', blogController.getByAuthorId);
-router.get('/bycategory/:categoryId', blogController.getByCategoryId);
+// POST - Create a new blog
+router.route('/').post(validate(blogValidation.createBlog), blogController.createBlog).get(blogController.getAllBlogs);
+
+// GET, PATCH, DELETE - Blog by ID (MongoDB ObjectId only)
+router
+  .route('/:id([0-9a-fA-F]{24})')
+  .get(blogController.getBlogById)
+  .put(validate(blogValidation.updateBlog), blogController.updateBlog)
+  .delete(blogController.deleteBlog);
+
+// GET - Blog by slug
+router.route('/:slug').get(blogController.getBlogBySlug);
+
+// GET - Blogs by author ID
+router.route('/byauthor/:authorId').get(blogController.getByAuthorId);
+
+// GET - Blogs by category ID
+router.route('/bycategory/:categoryId').get(blogController.getByCategoryId);
 
 module.exports = router;

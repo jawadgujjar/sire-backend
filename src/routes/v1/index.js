@@ -24,9 +24,9 @@ const refundPolicyRoute = require('./refundpolicy.route');
 const navItemsRoute = require('./navitems.route');
 const faqRoute = require('./faq.route');
 const dielineForm = require('./dielineform.route');
+const orderRoute = require('./order.route');
 const instantQuoteRoute = require('./instantquote.route');
 const approvedDesignRoute = require('./approveddesign.route');
-
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -140,6 +140,10 @@ const defaultRoutes = [
   {
     path: '/approveddesign',
     route: approvedDesignRoute,
+  },
+  {
+    path: '/order',
+    route: orderRoute,
   },
 ];
 

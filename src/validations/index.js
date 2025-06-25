@@ -18,3 +18,4 @@ module.exports.testimonialValidation = require('./testimonial.validation');
 module.exports.searchtrackerValidation = require('./searchtracker.validation');
 module.exports.carouselimageValidation = require('./carouselimage.validation');
 module.exports.customerfeedbackValidation = require('./customerfeedback.validation');
+module.exports.orderValidation = require('./order.validation');

@@ -30,6 +30,13 @@ const blogSchema = new mongoose.Schema(
       ref: 'BlogCategory',
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
     title: {
       type: String,
       required: true,

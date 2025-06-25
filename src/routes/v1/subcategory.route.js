@@ -8,17 +8,20 @@ const router = express.Router();
 // POST - Create a new subcategory
 router
   .route('/')
-  .post(validate(subCategoryValidation.createSubCategory), subCategoryController.createSubCategory) // Create
+  .post(validate(subCategoryValidation.createSubCategory), subCategoryController.createSubCategory)
   .get(subCategoryController.getAllSubCategories);
 
-// GET - Get subcategory by ID, PATCH (update), DELETE
+// GET, PATCH, DELETE - Subcategory by ID (MongoDB ObjectId only)
 router
-  .route('/:id')
-  .get(subCategoryController.getSubCategoryById) // Get by ID
-  .patch(validate(subCategoryValidation.updateSubCategory), subCategoryController.updateSubCategory) // Update
-  .delete(subCategoryController.deleteSubCategory); // Delete
+  .route('/:id([0-9a-fA-F]{24})')
+  .get(subCategoryController.getSubCategoryById)
+  .patch(validate(subCategoryValidation.updateSubCategory), subCategoryController.updateSubCategory)
+  .delete(subCategoryController.deleteSubCategory);
 
-// ✅ GET - Get subcategories by categoryId
-router.route('/category/:categoryId').get(subCategoryController.getSubCategoriesByCategoryId); // Get subcategories under a category
+// GET - Subcategory by slug
+router.route('/:slug').get(subCategoryController.getSubCategoryBySlug);
+
+// GET - Subcategories by categoryId
+router.route('/category/:categoryId').get(subCategoryController.getSubCategoriesByCategoryId);
 
 module.exports = router;

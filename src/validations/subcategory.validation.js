@@ -15,8 +15,16 @@ const detailsSchema = Joi.array().items(
   })
 );
 
+const slugSchema = Joi.string()
+  .regex(/^[a-z0-9/-]+$/)
+  .messages({
+    'string.pattern.base':
+      'Slug must be lowercase, alphanumeric, and can include hyphens and slashes (e.g., category/subcategory).',
+  });
+
 const createSubCategory = Joi.object({
   title: Joi.string().required(),
+  slug: slugSchema.required(),
   image: Joi.string().uri(),
   pageImage: Joi.string().optional().uri(),
   description: Joi.string().optional(),
@@ -30,6 +38,7 @@ const createSubCategory = Joi.object({
 
 const updateSubCategory = Joi.object({
   title: Joi.string().optional().max(100),
+  slug: slugSchema.optional(),
   image: Joi.string().optional().uri(),
   pageImage: Joi.string().optional().uri(),
   description: Joi.string().optional().max(1000),
