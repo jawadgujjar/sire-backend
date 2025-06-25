@@ -24,3 +24,4 @@ module.exports.refundPolicyController = require('./refundpolicy.controller');
 module.exports.instantQuoteController = require('./instantquote.controller');
 module.exports.dielineFormController = require('./dielineform.controller');
 module.exports.ApprovedDesignController = require('./approveddesign.controller');
+module.exports.orderController = require('./order.controller');

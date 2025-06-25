@@ -31,7 +31,13 @@ const getSubCategoriesByCategoryIdService = async (categoryId) => {
     throw new Error(error.message);
   }
 };
-
+const getSubCategoryBySlugService = async (slug) => {
+  try {
+    return await SubCategory.findOne({ slug }); // Find subcategory by slug
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 // Update subcategory
 const updateSubCategoryService = async (subCategoryId, updateData) => {
   try {
@@ -55,6 +61,7 @@ module.exports = {
   getAllSubCategoriesService,
   getSubCategoryByIdService,
   getSubCategoriesByCategoryIdService, // ✅ exported here
+  getSubCategoryBySlugService,
   updateSubCategoryService,
   deleteSubCategoryService,
 };

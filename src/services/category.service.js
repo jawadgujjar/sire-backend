@@ -31,7 +31,13 @@ const getCategoryByNameService = async (categoryName) => {
     throw new Error(error.message); // If an error occurs, throw it
   }
 };
-
+const getCategoryBySlugService = async (slug) => {
+  try {
+    return await Category.findOne({ slug }); // Find category by slug
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 // Service to update category by ID
 const updateCategoryService = async (categoryId, updateData) => {
   try {
@@ -56,6 +62,7 @@ module.exports = {
   getAllCategoriesService,
   getCategoryByIdService,
   getCategoryByNameService,
+  getCategoryBySlugService,
   updateCategoryService,
   deleteCategoryService,
 };

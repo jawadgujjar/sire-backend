@@ -13,11 +13,16 @@ const detailSchema = Joi.object({
     )
     .optional(),
 });
-
+const slugSchema = Joi.string()
+  .regex(/^[a-z0-9-]+$/)
+  .messages({
+    'string.pattern.base': 'Slug must be lowercase, alphanumeric, and can include hyphens (e.g., my-blog).',
+  });
 const createBlogSchema = Joi.object({
   blogAuthor: Joi.string().required(),
   blogCategory: Joi.string().required(),
   title: Joi.string().required(),
+  slug: slugSchema.required(),
   image: Joi.string().required(),
   details: Joi.array().items(detailSchema).optional(),
   hasCarousel: Joi.boolean().optional(),
@@ -30,6 +35,7 @@ const updateBlogSchema = Joi.object({
   blogCategory: Joi.string().required(),
   title: Joi.string().required(),
   image: Joi.string().required(),
+  slug: slugSchema.required(),
   details: Joi.array().items(detailSchema).optional(),
   hasCarousel: Joi.boolean().optional(),
   seoTitle: Joi.string(),

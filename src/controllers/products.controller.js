@@ -29,7 +29,17 @@ const getProductsBySubCategory = catchAsync(async (req, res) => {
   const products = await productService.getProductsBySubCategoryId(req.params.subCategoryId);
   res.send(products);
 });
+const getProductBySlug = catchAsync(async (req, res) => {
+  const { categorySlug, subCategorySlug, productSlug } = req.params;
+  const product = await productService.getProductBySlugService(categorySlug, subCategorySlug, productSlug);
+  res.status(httpStatus.OK).send(product);
+});
 
+const getProductByVariantSku = catchAsync(async (req, res) => {
+  const { categorySlug, subCategorySlug, productSlug, variantSku } = req.params;
+  const product = await productService.getProductByVariantSkuService(categorySlug, subCategorySlug, productSlug, variantSku);
+  res.status(httpStatus.OK).send(product);
+});
 const updateProduct = catchAsync(async (req, res) => {
   const updated = await productService.updateProductById(req.params.productId, req.body);
   res.send(updated);
@@ -46,6 +56,8 @@ module.exports = {
   getProduct,
   getProductsByCategory,
   getProductsBySubCategory,
+  getProductBySlug,
+  getProductByVariantSku,
   updateProduct,
   deleteProduct,
 };
