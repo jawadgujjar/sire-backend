@@ -13,11 +13,11 @@ const getOrderById = async (id) => {
 };
 
 const getOrdersByUserId = async (userId) => {
-  return Order.find({ userId }).populate('product userId').sort({ createdAt: -1 });
+  return Order.find({ userId }).populate('userId').sort({ createdAt: -1 });
 };
 
 const updateOrder = async (id, data) => {
-  return Order.findByIdAndUpdate(id, data, { new: true }).populate('product userId');
+  return Order.findByIdAndUpdate(id, data, { new: true }).populate('userId');
 };
 
 const deleteOrder = async (id) => {
