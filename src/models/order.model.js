@@ -17,8 +17,7 @@ const shippingAddressSchema = new mongoose.Schema(
 const orderSchema = new mongoose.Schema(
   {
     product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
+      type: String,
       required: true,
     },
     material: {

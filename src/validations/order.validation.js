@@ -23,7 +23,7 @@ const shippingAddressSchema = Joi.object({
 
 // Create Order Schema
 const createOrder = Joi.object({
-  product: Joi.string().required().custom(objectId, 'ObjectId Validation'),
+  product: Joi.string().required,
   material: Joi.string().required(),
   quantity: Joi.number().min(1).required(),
   size: Joi.object({
@@ -45,7 +45,7 @@ const createOrder = Joi.object({
 
 // Update Order Schema
 const updateOrder = Joi.object({
-  product: Joi.string().optional().custom(objectId, 'ObjectId Validation'),
+  product: Joi.string().required,
   material: Joi.string().optional(),
   quantity: Joi.number().min(1).optional(),
   size: Joi.object({
