@@ -1,4 +1,5 @@
 const subCategoryService = require('../services/subcategory.service'); // Import subcategory services
+const catchAsync = require('../utils/catchAsync');
 
 // Create new subcategory
 const createSubCategory = async (req, res) => {
@@ -63,21 +64,18 @@ const getSubCategoriesByCategoryId = async (req, res) => {
     });
   }
 };
-const getSubCategoryBySlug = async (req, res) => {
-  try {
-    const { slug } = req.params;
-    const subCategory = await subCategoryService.getSubCategoryBySlugService(slug);
-    if (!subCategory) {
-      return res.status(404).json({ message: 'Subcategory not found' });
-    }
-    return res.status(200).json(subCategory);
-  } catch (error) {
-    return res.status(500).json({
-      message: 'Error fetching subcategory by slug',
-      error: error.message,
-    });
+const getSubCategoryBySlug = catchAsync(async (req, res) => {
+  const { categorySlug, subCategorySlug } = req.params;
+  const slug = `${categorySlug}/${subCategorySlug}`;
+
+  const subCategory = await subCategoryService.getSubCategoryBySlugService(slug);
+
+  if (!subCategory) {
+    return res.status(404).json({ message: 'Subcategory not found' });
   }
-};
+
+  res.status(200).send(subCategory);
+});
 // Update subcategory
 const updateSubCategory = async (req, res) => {
   try {

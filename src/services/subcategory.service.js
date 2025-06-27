@@ -1,3 +1,4 @@
+const { Category } = require('../models');
 const SubCategory = require('../models/subcategory.model');
 
 // Create subcategory
@@ -33,11 +34,31 @@ const getSubCategoriesByCategoryIdService = async (categoryId) => {
 };
 const getSubCategoryBySlugService = async (slug) => {
   try {
-    return await SubCategory.findOne({ slug }); // Find subcategory by slug
+    // Expecting slug like: rigid-packaging-boxes/luxury-boxes
+    const [categorySlug] = slug.split('/');
+
+    // 1. Validate category
+    const category = await Category.findOne({ slug: categorySlug });
+    if (!category) {
+      throw new Error('Category not found');
+    }
+
+    // 2. Validate subcategory under that category
+    const subCategory = await SubCategory.findOne({
+      slug,
+      categoryId: category._id,
+    });
+
+    if (!subCategory) {
+      throw new Error('Subcategory not found under this category');
+    }
+
+    return subCategory;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message || 'Failed to fetch subcategory');
   }
 };
+
 // Update subcategory
 const updateSubCategoryService = async (subCategoryId, updateData) => {
   try {
