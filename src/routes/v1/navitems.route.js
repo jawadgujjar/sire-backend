@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const navItems = await NavItem.find()
-      .populate('categories', 'title image') // Only send necessary fields
+      .populate('categories', 'title image slug') // Only send necessary fields
       .sort('position');
 
     res.json(navItems);
@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
 // ✅ Get a single NavItem
 router.get('/:id', async (req, res) => {
   try {
-    const navItem = await NavItem.findById(req.params.id).populate('categories', 'title image');
+    const navItem = await NavItem.findById(req.params.id).populate('categories', 'title image slug');
     if (!navItem) {
       return res.status(404).json({ error: 'NavItem not found' });
     }
