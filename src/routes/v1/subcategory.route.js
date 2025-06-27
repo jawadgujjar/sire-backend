@@ -19,7 +19,7 @@ router
   .delete(subCategoryController.deleteSubCategory);
 
 // GET - Subcategory by slug
-router.route('/:slug').get(subCategoryController.getSubCategoryBySlug);
+router.route('/:categorySlug/:subCategorySlug').get(subCategoryController.getSubCategoryBySlug);
 
 // GET - Subcategories by categoryId
 router.route('/category/:categoryId').get(subCategoryController.getSubCategoriesByCategoryId);
