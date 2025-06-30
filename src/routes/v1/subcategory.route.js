@@ -11,17 +11,17 @@ router
   .post(validate(subCategoryValidation.createSubCategory), subCategoryController.createSubCategory)
   .get(subCategoryController.getAllSubCategories);
 
-// GET, PATCH, DELETE - Subcategory by ID (MongoDB ObjectId only)
+// ✅ More specific path first: GET - Subcategories by categoryId
+router.route('/category/:categoryId').get(subCategoryController.getSubCategoriesByCategoryId);
+
+// ✅ Slug-based route next
+router.route('/:categorySlug/:subCategorySlug').get(subCategoryController.getSubCategoryBySlug);
+
+// ✅ ID-based route last
 router
   .route('/:id([0-9a-fA-F]{24})')
   .get(subCategoryController.getSubCategoryById)
   .patch(validate(subCategoryValidation.updateSubCategory), subCategoryController.updateSubCategory)
   .delete(subCategoryController.deleteSubCategory);
-
-// GET - Subcategory by slug
-router.route('/:categorySlug/:subCategorySlug').get(subCategoryController.getSubCategoryBySlug);
-
-// GET - Subcategories by categoryId
-router.route('/category/:categoryId').get(subCategoryController.getSubCategoriesByCategoryId);
 
 module.exports = router;
