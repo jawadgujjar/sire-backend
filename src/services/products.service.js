@@ -27,20 +27,23 @@ const getProductsBySubCategoryId = async (subCategoryId) => {
 };
 const getProductBySlugService = async (categorySlug, subCategorySlug, productSlug) => {
   try {
-    // Validate category and subcategory slugs
+    // Validate category
     const category = await Category.findOne({ slug: categorySlug });
-    if (!category) {
-      throw new Error('Category not found');
-    }
-    const subCategory = await SubCategory.findOne({ slug: subCategorySlug });
-    if (!subCategory) {
-      throw new Error('Subcategory not found');
-    }
+    if (!category) throw new Error('Category not found');
+
+    // Construct full subcategory slug
+    const fullSubCategorySlug = `${categorySlug}/${subCategorySlug}`;
+    const subCategory = await SubCategory.findOne({
+      slug: fullSubCategorySlug, // Use full slug
+      categoryId: category._id,
+    });
+    if (!subCategory) throw new Error('Subcategory not found');
+
+    // Construct full product slug
     const fullSlug = `${categorySlug}/${subCategorySlug}/${productSlug}`;
     const product = await Product.findOne({ slug: fullSlug }).populate('categories subcategories');
-    if (!product) {
-      throw new Error('Product not found');
-    }
+    if (!product) throw new Error('Product not found');
+
     product.variants = product.variants || [];
     return product;
   } catch (error) {
@@ -50,22 +53,25 @@ const getProductBySlugService = async (categorySlug, subCategorySlug, productSlu
 
 const getProductByVariantSkuService = async (categorySlug, subCategorySlug, productSlug, variantSku) => {
   try {
-    // Validate category and subcategory slugs
+    // Validate category
     const category = await Category.findOne({ slug: categorySlug });
-    if (!category) {
-      throw new Error('Category not found');
-    }
-    const subCategory = await SubCategory.findOne({ slug: subCategorySlug });
-    if (!subCategory) {
-      throw new Error('Subcategory not found');
-    }
+    if (!category) throw new Error('Category not found');
+
+    // Construct full subcategory slug
+    const fullSubCategorySlug = `${categorySlug}/${subCategorySlug}`;
+    const subCategory = await SubCategory.findOne({
+      slug: fullSubCategorySlug,
+      categoryId: category._id,
+    });
+    if (!subCategory) throw new Error('Subcategory not found');
+
+    // Construct full product slug
     const fullSlug = `${categorySlug}/${subCategorySlug}/${productSlug}`;
     const product = await Product.findOne({ slug: fullSlug, 'variants.sku': variantSku }).populate(
       'categories subcategories'
     );
-    if (!product) {
-      throw new Error('Product or variant not found');
-    }
+    if (!product) throw new Error('Product or variant not found');
+
     product.variants = product.variants || [];
     return product;
   } catch (error) {
