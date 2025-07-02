@@ -7,6 +7,7 @@ const createProduct = catchAsync(async (req, res) => {
   const product = await productService.createProduct(req.body);
   res.status(httpStatus.CREATED).send(product);
 });
+
 const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().populate('categories subcategories');
@@ -15,6 +16,7 @@ const getAllProducts = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 const getProduct = catchAsync(async (req, res) => {
   const product = await productService.getProductById(req.params.productId);
   res.send(product);
@@ -29,17 +31,24 @@ const getProductsBySubCategory = catchAsync(async (req, res) => {
   const products = await productService.getProductsBySubCategoryId(req.params.subCategoryId);
   res.send(products);
 });
+
 const getProductBySlug = catchAsync(async (req, res) => {
   const { categorySlug, subCategorySlug, productSlug } = req.params;
   const product = await productService.getProductBySlugService(categorySlug, subCategorySlug, productSlug);
   res.status(httpStatus.OK).send(product);
 });
 
-const getProductByVariantSku = catchAsync(async (req, res) => {
-  const { categorySlug, subCategorySlug, productSlug, variantSku } = req.params;
-  const product = await productService.getProductByVariantSkuService(categorySlug, subCategorySlug, productSlug, variantSku);
+const getProductByVariantSlug = catchAsync(async (req, res) => {
+  const { categorySlug, subCategorySlug, productSlug, variantSlug } = req.params;
+  const product = await productService.getProductByVariantSlugService(
+    categorySlug,
+    subCategorySlug,
+    productSlug,
+    variantSlug
+  );
   res.status(httpStatus.OK).send(product);
 });
+
 const updateProduct = catchAsync(async (req, res) => {
   const updated = await productService.updateProductById(req.params.productId, req.body);
   res.send(updated);
@@ -57,7 +66,7 @@ module.exports = {
   getProductsByCategory,
   getProductsBySubCategory,
   getProductBySlug,
-  getProductByVariantSku,
+  getProductByVariantSlug,
   updateProduct,
   deleteProduct,
 };

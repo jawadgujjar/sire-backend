@@ -7,6 +7,6 @@ yarn.lock
 # Environment varibales
 .env*
 !.env*.example
-
-# Code coverage 
+package-lock.json
+# Code coverage
 coverage
