@@ -26,5 +26,5 @@ router
 
 router.route('/:categorySlug/:subCategorySlug/:productSlug').get(productController.getProductBySlug);
 
-router.route('/:categorySlug/:subCategorySlug/:productSlug-:variantSku').get(productController.getProductByVariantSku);
+router.route('/:categorySlug/:subCategorySlug/:productSlug/:variantSlug').get(productController.getProductByVariantSlug);
 module.exports = router;
