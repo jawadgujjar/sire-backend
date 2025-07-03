@@ -4,10 +4,12 @@ const createOrder = async (data) => {
   return Order.create(data);
 };
 
-const getAllOrders = async () => {
-  return Order.find().populate('product userId').sort({ createdAt: -1 });
+const getAllOrders = async (filter, options) => {
+  const orders = await Order.find(filter)
+    .populate('userId')
+    .sort((options && options.sort) || { createdAt: -1 });
+  return orders;
 };
-
 const getOrderById = async (id) => {
   return Order.findById(id).populate('product userId');
 };
