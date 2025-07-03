@@ -5,7 +5,7 @@ const createOrder = async (data) => {
 };
 
 const getAllOrders = async () => {
-  return Order.find().populate('product userId').sort({ createdAt: -1 });
+  return Order.find().populate('userId').sort({ createdAt: -1 });
 };
 
 const getOrderById = async (id) => {
