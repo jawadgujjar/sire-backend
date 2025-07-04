@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
+// Reuse the shipping address schema
 const shippingAddressSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    companyName: { type: String, required: false },
+    companyName: { type: String },
     phoneNumber: { type: String, required: true },
     streetAddress: { type: String, required: true },
     city: { type: String, required: true },
@@ -14,7 +15,8 @@ const shippingAddressSchema = new mongoose.Schema(
   { _id: false }
 );
 
-const orderSchema = new mongoose.Schema(
+// New SampleRequest schema
+const sampleRequestSchema = new mongoose.Schema(
   {
     product: {
       type: String,
@@ -38,42 +40,24 @@ const orderSchema = new mongoose.Schema(
     },
     file: {
       type: String,
-      required: false,
     },
     price: {
       type: Number,
       required: true,
       min: 0,
     },
-    status: {
-      type: String,
-      enum: ['Under Production', 'Forwarded to Production', 'Shipped','Delivered'],
-      default: 'Under Production',
-      required: true,
-    },
-    shippedvia: {
-      type: String,
-    },
-    trackingid: {
-      type: String,
-    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
-    invoice: {
-      type: String,
+    shippingAddress: shippingAddressSchema,
+    notification: {
+      type: Boolean,
+      default: false,
     },
-    approvedStatus: {
-      type: String,
-      enum: ['Pending', 'Approved', 'Rejected'],
-      default: 'Pending',
-      required: true,
-    },
-    shippingAddress: [shippingAddressSchema],
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Order', orderSchema);
+module.exports = mongoose.model('SampleRequest', sampleRequestSchema);

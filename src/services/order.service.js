@@ -10,7 +10,6 @@ const getAllOrders = async (filter, options) => {
     .sort((options && options.sort) || { createdAt: -1 });
   return orders;
 };
-
 const getOrderById = async (id) => {
   return Order.findById(id).populate('product userId');
 };

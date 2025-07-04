@@ -27,6 +27,7 @@ const dielineForm = require('./dielineform.route');
 const orderRoute = require('./order.route');
 const instantQuoteRoute = require('./instantquote.route');
 const approvedDesignRoute = require('./approveddesign.route');
+const sampleRequestsRoute = require('./samplerequests.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -144,6 +145,10 @@ const defaultRoutes = [
   {
     path: '/order',
     route: orderRoute,
+  },
+  {
+    path: '/samplerequests',
+    route: sampleRequestsRoute,
   },
 ];
 

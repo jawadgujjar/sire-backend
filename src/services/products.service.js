@@ -67,20 +67,31 @@ const getProductByVariantSlugService = async (categorySlug, subCategorySlug, pro
     // Construct full product slug
     const fullSlug = `${categorySlug}/${subCategorySlug}/${productSlug}`;
 
-    // Construct full variant slug
-    const fullVariantSlug = `${fullSlug}-${variantSlug}`;
+    // Construct full variant slug - CHANGE HERE (use forward slash instead of hyphen)
+    const fullVariantSlug = `${fullSlug}/${variantSlug}`;
 
     // Case-insensitive slug and variant slug search
     const product = await Product.findOne({
       slug: { $regex: `^${fullSlug}$`, $options: 'i' },
       'variants.slug': { $regex: `^${fullVariantSlug}$`, $options: 'i' },
     }).populate('categories subcategories');
+
     if (!product) {
       throw new Error('Product or variant not found');
     }
 
-    product.variants = product.variants || [];
-    return product;
+    // Find the specific variant
+    const variant = product.variants.find((v) => v.slug.toLowerCase() === fullVariantSlug.toLowerCase());
+
+    if (!variant) {
+      throw new Error('Variant not found');
+    }
+
+    // Return both product and the specific variant
+    return {
+      ...product.toObject(),
+      currentVariant: variant,
+    };
   } catch (error) {
     throw new Error(error.message);
   }
