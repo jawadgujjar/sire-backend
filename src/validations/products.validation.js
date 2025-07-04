@@ -208,7 +208,7 @@ const updateProduct = {
       sku: Joi.string().optional(),
       slug: Joi.string()
         .regex(/^[a-z0-9/-]+$/)
-        .required()
+        .optional()
         .messages({
           'string.pattern.base':
             'Slug must be lowercase, alphanumeric, and can include hyphens and slashes (e.g., boxes/custom-box/luxury-matte)',
