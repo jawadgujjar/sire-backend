@@ -25,3 +25,4 @@ module.exports.InstantQuote = require('./instantquote.model');
 module.exports.DielineForm = require('./dielineform.model');
 module.exports.ApprovedDesign = require('./approveddesign.model');
 module.exports.Order = require('./order.model');
+module.exports.SampleRequest = require('./samplerequests.model');

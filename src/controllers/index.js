@@ -25,3 +25,4 @@ module.exports.instantQuoteController = require('./instantquote.controller');
 module.exports.dielineFormController = require('./dielineform.controller');
 module.exports.ApprovedDesignController = require('./approveddesign.controller');
 module.exports.orderController = require('./order.controller');
+module.exports.samplerequestsController = require('./samplerequests.controller');
