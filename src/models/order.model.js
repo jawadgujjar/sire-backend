@@ -47,7 +47,7 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['Under Production', 'Forwarded to Production', 'Shipped','Delivered'],
+      enum: ['Under Production', 'Forwarded to Production', 'Shipped', 'Delivered'],
       default: 'Under Production',
       required: true,
     },
