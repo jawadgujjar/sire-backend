@@ -28,6 +28,7 @@ const orderRoute = require('./order.route');
 const instantQuoteRoute = require('./instantquote.route');
 const approvedDesignRoute = require('./approveddesign.route');
 const sampleRequestsRoute = require('./samplerequests.route');
+const profileAddressRoute = require('./profileaddress.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -149,6 +150,10 @@ const defaultRoutes = [
   {
     path: '/samplerequests',
     route: sampleRequestsRoute,
+  },
+  {
+    path: '/profileaddress',
+    route: profileAddressRoute,
   },
 ];
 
