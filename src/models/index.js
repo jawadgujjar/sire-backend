@@ -26,3 +26,4 @@ module.exports.DielineForm = require('./dielineform.model');
 module.exports.ApprovedDesign = require('./approveddesign.model');
 module.exports.Order = require('./order.model');
 module.exports.SampleRequest = require('./samplerequests.model');
+module.exports.Profile = require('./profileaddress.model');
